@@ -1,0 +1,5 @@
+# Event model（下一轮建议，旧日志字段不齐）
+记录UTC和本地offset、run_id、attempt、lane、event、source/artifact/hash。
+区分COMPOSER_FILLED、SUBMIT_ATTEMPTED、USER_MESSAGE_CONFIRMED、FIRST_RESULT_VISIBLE、ARTIFACT_CAPTURED、LEDGER_RECONCILED、NEXT_BATCH_SENT、QC、STOP及原因。
+回包到续发=NEXT_BATCH_SENT-FIRST_RESULT_VISIBLE；wait_for显式时长不是完整idle、worker计算或协调工时。CONTROL_DOWN与APP_DOWN按工具/页面/时段分开。
+每小时QC后继续授权工作；checkpoint不发出隐含STOP。

@@ -1,0 +1,25 @@
+{
+  "task": "FOUR_TRACK_RESEARCH_8H_20261006",
+  "formal_window_ledger_rows": 69,
+  "formal_window_structured_items": 61,
+  "formal_window_raw_unparsed_items": 8,
+  "ledger_rows": 71,
+  "structured_items": 71,
+  "raw_unparsed_items": 0,
+  "final_status": "REGRESSION_PREFLIGHT_CHECKING",
+  "regression_run": {
+    "run_id": "REGRESSION-20261006-131237",
+    "start_utc": "2026-10-06T05:12:37+00:00",
+    "hard_stop_utc": "2026-10-06T08:12:37+00:00",
+    "status": "INVALIDATED_PREFLIGHT_NOT_CONFIRMED",
+    "b07_status": "INCOMPLETE_METADATA_CAPTURED_0_ACTUAL_ITEMS",
+    "phase": "VERIFY_COMPARE_SYNTHESIZE",
+    "control_failures": 3,
+    "worker_sends": 0,
+    "old_start_not_valid": true,
+    "actual_start_utc": null,
+    "actual_hard_stop_utc": null,
+    "preflight_status": "TABS_AND_DOT_READ_PASS_SUBSEQUENT_CONTROL_UNCONFIRMED"
+  },
+  "evidence_status": "REPORTED_SNAPSHOT_STATE_NOT_PAGE_OBSERVATION"
+}

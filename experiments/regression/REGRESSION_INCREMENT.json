@@ -1,0 +1,297 @@
+{
+  "working_capture": {
+    "start": "2026-10-06T13:52:18.426270+08:00",
+    "end": "2026-10-06T13:52:27.390649+08:00"
+  },
+  "final_capture": {
+    "start": "2026-10-06T14:02:49.928326+08:00",
+    "end": "2026-10-06T14:02:51.194154+08:00"
+  },
+  "scope": "All five main source groups rescanned; regression group compared separately",
+  "changes": [
+    {
+      "change": "NEW",
+      "source_path": "D:\\FOUR_TRACK_RESEARCH_8H_20261006\\checkpoints\\PREFLIGHT_RESET_DOT_READ_REQUEST.json",
+      "old_sha256": null,
+      "new_sha256": "d75df56ea10a8cababfc530674d83d756ebb1c547d10f78347458a29ebe40d20",
+      "old_snapshot": null,
+      "new_snapshot": "source_snapshots/final/four-track-8h/checkpoints/PREFLIGHT_RESET_DOT_READ_REQUEST.json"
+    },
+    {
+      "change": "NEW",
+      "source_path": "D:\\FOUR_TRACK_RESEARCH_8H_20261006\\checkpoints\\PREFLIGHT_RESET_DOT_READ_RESPONSE.json",
+      "old_sha256": null,
+      "new_sha256": "a015afa7684ad1c5a1af8ed7020f1a13cc84849be686a1323553ea03f9684f39",
+      "old_snapshot": null,
+      "new_snapshot": "source_snapshots/final/four-track-8h/checkpoints/PREFLIGHT_RESET_DOT_READ_RESPONSE.json"
+    },
+    {
+      "change": "NEW",
+      "source_path": "D:\\FOUR_TRACK_RESEARCH_8H_20261006\\checkpoints\\PREFLIGHT_RESET_MUSE_TAB_REQUEST.json",
+      "old_sha256": null,
+      "new_sha256": "59393ea5aa7fd06c6df74cb40515c01fbfa43d0eaadb077a5477e4b70505eaa1",
+      "old_snapshot": null,
+      "new_snapshot": "source_snapshots/final/four-track-8h/checkpoints/PREFLIGHT_RESET_MUSE_TAB_REQUEST.json"
+    },
+    {
+      "change": "NEW",
+      "source_path": "D:\\FOUR_TRACK_RESEARCH_8H_20261006\\checkpoints\\PREFLIGHT_RESET_MUSE_TAB_RESPONSE.json",
+      "old_sha256": null,
+      "new_sha256": "26e2edbe52822b337f799df3041604cc7c5eac351f1cbece5252af694d2fbcf8",
+      "old_snapshot": null,
+      "new_snapshot": "source_snapshots/final/four-track-8h/checkpoints/PREFLIGHT_RESET_MUSE_TAB_RESPONSE.json"
+    },
+    {
+      "change": "NEW",
+      "source_path": "D:\\FOUR_TRACK_RESEARCH_8H_20261006\\checkpoints\\PREFLIGHT_RESET_TABS_REQUEST.json",
+      "old_sha256": null,
+      "new_sha256": "97650705b2a50fda7bf6ae9e504c13347e20fbdee344da845b71160e67f36a96",
+      "old_snapshot": null,
+      "new_snapshot": "source_snapshots/final/four-track-8h/checkpoints/PREFLIGHT_RESET_TABS_REQUEST.json"
+    },
+    {
+      "change": "NEW",
+      "source_path": "D:\\FOUR_TRACK_RESEARCH_8H_20261006\\checkpoints\\PREFLIGHT_RESET_TABS_RESPONSE.json",
+      "old_sha256": null,
+      "new_sha256": "23e6b2ced2878370840684f1227146705f4da394f2c1f16a99ff430ee0afce6b",
+      "old_snapshot": null,
+      "new_snapshot": "source_snapshots/final/four-track-8h/checkpoints/PREFLIGHT_RESET_TABS_RESPONSE.json"
+    },
+    {
+      "change": "NEW",
+      "source_path": "D:\\FOUR_TRACK_RESEARCH_8H_20261006\\checkpoints\\RESET_CONFIRM_REQUEST.json",
+      "old_sha256": null,
+      "new_sha256": "03d33ef3110302e85be6e9b5c2b2c1552ae07c72688af1733a7905d0a46c7930",
+      "old_snapshot": null,
+      "new_snapshot": "source_snapshots/final/four-track-8h/checkpoints/RESET_CONFIRM_REQUEST.json"
+    },
+    {
+      "change": "NEW",
+      "source_path": "D:\\FOUR_TRACK_RESEARCH_8H_20261006\\checkpoints\\RESET_CONFIRM_RESPONSE.txt",
+      "old_sha256": null,
+      "new_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "old_snapshot": null,
+      "new_snapshot": "source_snapshots/final/four-track-8h/checkpoints/RESET_CONFIRM_RESPONSE.txt"
+    },
+    {
+      "change": "NEW",
+      "source_path": "D:\\FOUR_TRACK_RESEARCH_8H_20261006\\checkpoints\\RESET_DELIVERY_REQUEST.json",
+      "old_sha256": null,
+      "new_sha256": "d74404e89f304040aaf45100e5ce2f6a390e63a2b2de3c0bc60fd7f25e556003",
+      "old_snapshot": null,
+      "new_snapshot": "source_snapshots/final/four-track-8h/checkpoints/RESET_DELIVERY_REQUEST.json"
+    },
+    {
+      "change": "NEW",
+      "source_path": "D:\\FOUR_TRACK_RESEARCH_8H_20261006\\checkpoints\\RESET_DELIVERY_RESPONSE.txt",
+      "old_sha256": null,
+      "new_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "old_snapshot": null,
+      "new_snapshot": "source_snapshots/final/four-track-8h/checkpoints/RESET_DELIVERY_RESPONSE.txt"
+    },
+    {
+      "change": "NEW",
+      "source_path": "D:\\FOUR_TRACK_RESEARCH_8H_20261006\\checkpoints\\RESET_DOT_SELECT_REQUEST.json",
+      "old_sha256": null,
+      "new_sha256": "5caa0af633507d1284e2f9bcddb6bc6621de39b75fd3e097f0ca4836466a49fa",
+      "old_snapshot": null,
+      "new_snapshot": "source_snapshots/final/four-track-8h/checkpoints/RESET_DOT_SELECT_REQUEST.json"
+    },
+    {
+      "change": "NEW",
+      "source_path": "D:\\FOUR_TRACK_RESEARCH_8H_20261006\\checkpoints\\RESET_DOT_SELECT_RESPONSE.txt",
+      "old_sha256": null,
+      "new_sha256": "b5f861b7b5073dd2b339c083458c2586ba8035a90c459f5d2c6eac79a0b4faa2",
+      "old_snapshot": null,
+      "new_snapshot": "source_snapshots/final/four-track-8h/checkpoints/RESET_DOT_SELECT_RESPONSE.txt"
+    },
+    {
+      "change": "NEW",
+      "source_path": "D:\\FOUR_TRACK_RESEARCH_8H_20261006\\checkpoints\\RESET_DOT_SNAPSHOT_REQUEST.json",
+      "old_sha256": null,
+      "new_sha256": "24a23f19361b74e23bafabecc25a9e73c62c1cca2c5271e696982463f3e95c49",
+      "old_snapshot": null,
+      "new_snapshot": "source_snapshots/final/four-track-8h/checkpoints/RESET_DOT_SNAPSHOT_REQUEST.json"
+    },
+    {
+      "change": "NEW",
+      "source_path": "D:\\FOUR_TRACK_RESEARCH_8H_20261006\\checkpoints\\RESET_DOT_SNAPSHOT_RESPONSE.txt",
+      "old_sha256": null,
+      "new_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "old_snapshot": null,
+      "new_snapshot": "source_snapshots/final/four-track-8h/checkpoints/RESET_DOT_SNAPSHOT_RESPONSE.txt"
+    },
+    {
+      "change": "MODIFIED",
+      "source_path": "D:\\FOUR_TRACK_RESEARCH_8H_20261006\\logs\\EVENTS.jsonl",
+      "old_sha256": "f3adeefecd4c387077a338c5410ac364d222f6e0ed33076e2a28a72191b197c3",
+      "new_sha256": "d62c81aa44022104f00e7a01afe8c368ee9f7d3a4fcdf9480f0fe61f2c0f10f0",
+      "old_snapshot": "source_snapshots/working/four-track-8h/logs/EVENTS.jsonl",
+      "new_snapshot": "source_snapshots/final/four-track-8h/logs/EVENTS.jsonl"
+    },
+    {
+      "change": "MODIFIED",
+      "source_path": "D:\\FOUR_TRACK_RESEARCH_8H_20261006\\logs\\WORKER_STATE.json",
+      "old_sha256": "905500048094adbefc48c0fe09c1125c73c6577cad6d29f2ccf656e4d8601d39",
+      "new_sha256": "70e6ca5558284e7ee7d6d7fdfc3e50f805790d9b4671af2fb5de36cc7fb76fe8",
+      "old_snapshot": "source_snapshots/working/four-track-8h/logs/WORKER_STATE.json",
+      "new_snapshot": "source_snapshots/final/four-track-8h/logs/WORKER_STATE.json"
+    },
+    {
+      "change": "NEW",
+      "source_path": "D:\\FOUR_TRACK_RESEARCH_8H_20261006\\worker_outputs\\REGRESSION_B07_OBSERVED_STATUS.json",
+      "old_sha256": null,
+      "new_sha256": "921c48186682181e621bb5eab624ac378b5eb1b96cd14e4a621a8aa6ce8139cc",
+      "old_snapshot": null,
+      "new_snapshot": "source_snapshots/final/four-track-8h/worker_outputs/REGRESSION_B07_OBSERVED_STATUS.json"
+    }
+  ],
+  "regression_changes": [
+    {
+      "change": "NEW",
+      "source_path": "D:\\FOUR_TRACK_RESEARCH_8H_20261006\\checkpoints\\PREFLIGHT_RESET_DOT_READ_REQUEST.json",
+      "old_sha256": null,
+      "new_sha256": "d75df56ea10a8cababfc530674d83d756ebb1c547d10f78347458a29ebe40d20",
+      "old_snapshot": null,
+      "new_snapshot": "source_snapshots/final/four-track-8h/checkpoints/PREFLIGHT_RESET_DOT_READ_REQUEST.json"
+    },
+    {
+      "change": "NEW",
+      "source_path": "D:\\FOUR_TRACK_RESEARCH_8H_20261006\\checkpoints\\PREFLIGHT_RESET_DOT_READ_RESPONSE.json",
+      "old_sha256": null,
+      "new_sha256": "a015afa7684ad1c5a1af8ed7020f1a13cc84849be686a1323553ea03f9684f39",
+      "old_snapshot": null,
+      "new_snapshot": "source_snapshots/final/four-track-8h/checkpoints/PREFLIGHT_RESET_DOT_READ_RESPONSE.json"
+    },
+    {
+      "change": "NEW",
+      "source_path": "D:\\FOUR_TRACK_RESEARCH_8H_20261006\\checkpoints\\PREFLIGHT_RESET_MUSE_TAB_REQUEST.json",
+      "old_sha256": null,
+      "new_sha256": "59393ea5aa7fd06c6df74cb40515c01fbfa43d0eaadb077a5477e4b70505eaa1",
+      "old_snapshot": null,
+      "new_snapshot": "source_snapshots/final/four-track-8h/checkpoints/PREFLIGHT_RESET_MUSE_TAB_REQUEST.json"
+    },
+    {
+      "change": "NEW",
+      "source_path": "D:\\FOUR_TRACK_RESEARCH_8H_20261006\\checkpoints\\PREFLIGHT_RESET_MUSE_TAB_RESPONSE.json",
+      "old_sha256": null,
+      "new_sha256": "26e2edbe52822b337f799df3041604cc7c5eac351f1cbece5252af694d2fbcf8",
+      "old_snapshot": null,
+      "new_snapshot": "source_snapshots/final/four-track-8h/checkpoints/PREFLIGHT_RESET_MUSE_TAB_RESPONSE.json"
+    },
+    {
+      "change": "NEW",
+      "source_path": "D:\\FOUR_TRACK_RESEARCH_8H_20261006\\checkpoints\\PREFLIGHT_RESET_TABS_REQUEST.json",
+      "old_sha256": null,
+      "new_sha256": "97650705b2a50fda7bf6ae9e504c13347e20fbdee344da845b71160e67f36a96",
+      "old_snapshot": null,
+      "new_snapshot": "source_snapshots/final/four-track-8h/checkpoints/PREFLIGHT_RESET_TABS_REQUEST.json"
+    },
+    {
+      "change": "NEW",
+      "source_path": "D:\\FOUR_TRACK_RESEARCH_8H_20261006\\checkpoints\\PREFLIGHT_RESET_TABS_RESPONSE.json",
+      "old_sha256": null,
+      "new_sha256": "23e6b2ced2878370840684f1227146705f4da394f2c1f16a99ff430ee0afce6b",
+      "old_snapshot": null,
+      "new_snapshot": "source_snapshots/final/four-track-8h/checkpoints/PREFLIGHT_RESET_TABS_RESPONSE.json"
+    },
+    {
+      "change": "NEW",
+      "source_path": "D:\\FOUR_TRACK_RESEARCH_8H_20261006\\checkpoints\\RESET_CONFIRM_REQUEST.json",
+      "old_sha256": null,
+      "new_sha256": "03d33ef3110302e85be6e9b5c2b2c1552ae07c72688af1733a7905d0a46c7930",
+      "old_snapshot": null,
+      "new_snapshot": "source_snapshots/final/four-track-8h/checkpoints/RESET_CONFIRM_REQUEST.json"
+    },
+    {
+      "change": "NEW",
+      "source_path": "D:\\FOUR_TRACK_RESEARCH_8H_20261006\\checkpoints\\RESET_CONFIRM_RESPONSE.txt",
+      "old_sha256": null,
+      "new_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "old_snapshot": null,
+      "new_snapshot": "source_snapshots/final/four-track-8h/checkpoints/RESET_CONFIRM_RESPONSE.txt"
+    },
+    {
+      "change": "NEW",
+      "source_path": "D:\\FOUR_TRACK_RESEARCH_8H_20261006\\checkpoints\\RESET_DELIVERY_REQUEST.json",
+      "old_sha256": null,
+      "new_sha256": "d74404e89f304040aaf45100e5ce2f6a390e63a2b2de3c0bc60fd7f25e556003",
+      "old_snapshot": null,
+      "new_snapshot": "source_snapshots/final/four-track-8h/checkpoints/RESET_DELIVERY_REQUEST.json"
+    },
+    {
+      "change": "NEW",
+      "source_path": "D:\\FOUR_TRACK_RESEARCH_8H_20261006\\checkpoints\\RESET_DELIVERY_RESPONSE.txt",
+      "old_sha256": null,
+      "new_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "old_snapshot": null,
+      "new_snapshot": "source_snapshots/final/four-track-8h/checkpoints/RESET_DELIVERY_RESPONSE.txt"
+    },
+    {
+      "change": "NEW",
+      "source_path": "D:\\FOUR_TRACK_RESEARCH_8H_20261006\\checkpoints\\RESET_DOT_SELECT_REQUEST.json",
+      "old_sha256": null,
+      "new_sha256": "5caa0af633507d1284e2f9bcddb6bc6621de39b75fd3e097f0ca4836466a49fa",
+      "old_snapshot": null,
+      "new_snapshot": "source_snapshots/final/four-track-8h/checkpoints/RESET_DOT_SELECT_REQUEST.json"
+    },
+    {
+      "change": "NEW",
+      "source_path": "D:\\FOUR_TRACK_RESEARCH_8H_20261006\\checkpoints\\RESET_DOT_SELECT_RESPONSE.txt",
+      "old_sha256": null,
+      "new_sha256": "b5f861b7b5073dd2b339c083458c2586ba8035a90c459f5d2c6eac79a0b4faa2",
+      "old_snapshot": null,
+      "new_snapshot": "source_snapshots/final/four-track-8h/checkpoints/RESET_DOT_SELECT_RESPONSE.txt"
+    },
+    {
+      "change": "NEW",
+      "source_path": "D:\\FOUR_TRACK_RESEARCH_8H_20261006\\checkpoints\\RESET_DOT_SNAPSHOT_REQUEST.json",
+      "old_sha256": null,
+      "new_sha256": "24a23f19361b74e23bafabecc25a9e73c62c1cca2c5271e696982463f3e95c49",
+      "old_snapshot": null,
+      "new_snapshot": "source_snapshots/final/four-track-8h/checkpoints/RESET_DOT_SNAPSHOT_REQUEST.json"
+    },
+    {
+      "change": "NEW",
+      "source_path": "D:\\FOUR_TRACK_RESEARCH_8H_20261006\\checkpoints\\RESET_DOT_SNAPSHOT_RESPONSE.txt",
+      "old_sha256": null,
+      "new_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "old_snapshot": null,
+      "new_snapshot": "source_snapshots/final/four-track-8h/checkpoints/RESET_DOT_SNAPSHOT_RESPONSE.txt"
+    },
+    {
+      "change": "MODIFIED",
+      "source_path": "D:\\FOUR_TRACK_RESEARCH_8H_20261006\\logs\\EVENTS.jsonl",
+      "old_sha256": "f3adeefecd4c387077a338c5410ac364d222f6e0ed33076e2a28a72191b197c3",
+      "new_sha256": "d62c81aa44022104f00e7a01afe8c368ee9f7d3a4fcdf9480f0fe61f2c0f10f0",
+      "old_snapshot": "source_snapshots/working/four-track-8h/logs/EVENTS.jsonl",
+      "new_snapshot": "source_snapshots/final/four-track-8h/logs/EVENTS.jsonl"
+    },
+    {
+      "change": "MODIFIED",
+      "source_path": "D:\\FOUR_TRACK_RESEARCH_8H_20261006\\logs\\WORKER_STATE.json",
+      "old_sha256": "905500048094adbefc48c0fe09c1125c73c6577cad6d29f2ccf656e4d8601d39",
+      "new_sha256": "70e6ca5558284e7ee7d6d7fdfc3e50f805790d9b4671af2fb5de36cc7fb76fe8",
+      "old_snapshot": "source_snapshots/working/four-track-8h/logs/WORKER_STATE.json",
+      "new_snapshot": "source_snapshots/final/four-track-8h/logs/WORKER_STATE.json"
+    },
+    {
+      "change": "NEW",
+      "source_path": "D:\\FOUR_TRACK_RESEARCH_8H_20261006\\worker_outputs\\REGRESSION_B07_OBSERVED_STATUS.json",
+      "old_sha256": null,
+      "new_sha256": "921c48186682181e621bb5eab624ac378b5eb1b96cd14e4a621a8aa6ce8139cc",
+      "old_snapshot": null,
+      "new_snapshot": "source_snapshots/final/four-track-8h/worker_outputs/REGRESSION_B07_OBSERVED_STATUS.json"
+    }
+  ],
+  "working_events_lines": 79,
+  "final_events_lines": 81,
+  "working_ledger_rows": 71,
+  "final_ledger_rows": 71,
+  "working_worker_outputs": 52,
+  "final_worker_outputs": 53,
+  "regression_report_exists": false,
+  "b07_result_files": [],
+  "regression_state_reported": "INVALIDATED_PREFLIGHT_NOT_CONFIRMED",
+  "limitation": "Time-bounded snapshot of live run; second scan is final-stage scan explicitly permitted by user, NOT proof of run completion. No source mutation or browser interaction."
+}

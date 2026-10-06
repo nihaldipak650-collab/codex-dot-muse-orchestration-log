@@ -1,0 +1,69 @@
+{
+  "wheel_rows": 232,
+  "wheel_countable": 221,
+  "wheel_test_statuses": {
+    "NOT RUN": 90,
+    "NOT_RUN / historical status absent": 20,
+    "NOT_RUN": 33,
+    "UNVERIFIED_PRIMARY_CONTENT": 10,
+    "NOT_TESTED": 79
+  },
+  "v1_rows": 100,
+  "benchmark_rows": 35,
+  "benchmark_dispositions": {
+    "CANDIDATE_UNVERIFIED": 29,
+    "REJECTED_DUPLICATE": 6
+  },
+  "dot_r2_zip_hashes": [
+    {
+      "path": "source_snapshots\\final\\benchmark-b\\artifacts\\BENCHB-DOT-R2\\delivery-01\\BENCHB-DOT-R2_RESULT.zip",
+      "sha256": "969911d807eda64ffd05bd36d526e770217e3311bbc626668a2228ccdbad1ede",
+      "entries": 5
+    },
+    {
+      "path": "source_snapshots\\final\\benchmark-b\\artifacts\\BENCHB-DOT-R2\\delivery-02\\BENCHB-DOT-R2_RESULT (1).zip",
+      "sha256": "969911d807eda64ffd05bd36d526e770217e3311bbc626668a2228ccdbad1ede",
+      "entries": 5
+    }
+  ],
+  "dot_r2_identical": true,
+  "current_ledger_rows": 71,
+  "current_tracks": {
+    "A": 12,
+    "B": 13,
+    "C": 28,
+    "D": 18
+  },
+  "school_rows": 28,
+  "competition_rows": 18,
+  "unique_item_ids": 71,
+  "b07_local_result_files": [],
+  "regression_status_reported": "INVALIDATED_PREFLIGHT_NOT_CONFIRMED",
+  "capture_stage": "final",
+  "capture_end": "2026-10-06T14:02:51.194154+08:00",
+  "research_part_headings": [
+    "## Part 1｜AI 项目式学习法的外部地图",
+    "## Part 2｜AI / Agent 工作组织法的外部地图",
+    "## Part 3｜30个最高价值案例",
+    "## Part 4｜反复出现的共性模式",
+    "## Part 5｜与当前想法一致的地方",
+    "## Part 6｜与当前想法冲突或需要调整的地方",
+    "## Part 7｜哪些观点过度简化",
+    "## Part 8｜公开领域中最接近这套思路的人、项目和方法",
+    "## Part 9｜可以直接借鉴的具体做法",
+    "## Part 10｜独立提出的升级版方法"
+  ],
+  "research_structure_previous_check": {
+    "parts_in_order": true,
+    "thirty_unique_cases": true,
+    "cases_have_source_insight_boundary": true,
+    "local_attachments_exist": true,
+    "code_fences_balanced": true,
+    "no_unfilled_parts_or_internal_web_ids": true,
+    "final_has_no_draft_label": true
+  },
+  "research_report_hash": "dbafe4523ca8ed7eba45f56e93df3a9f141215a220e49623fdb48c41e1b80475",
+  "research_hash_matches_prior": true,
+  "source_malformed_json_files": [],
+  "acceptance_pass": true
+}

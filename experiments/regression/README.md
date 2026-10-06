@@ -1,0 +1,5 @@
+# Regression采集状态
+
+REPORTED run_id=REGRESSION-20261006-131237；status=INVALIDATED_PREFLIGHT_NOT_CONFIRMED；old_start_not_valid=True；actual_start_utc=None；actual_hard_stop_utc=None；B07=INCOMPLETE_METADATA_CAPTURED_0_ACTUAL_ITEMS。
+旧13:12起点及16:12截止已被撤销，不能认为有效回归已跑2–3小时。B07仅元数据声称研究完成，实际items=0，ledger仍71。
+采集截止以docs/CURRENT_STATE.md为准。存在REGRESSION_*工件不等于完整回归验收通过。原件位置与hash见ARCHIVE_INDEX.csv，增量见REGRESSION_INCREMENT.json。

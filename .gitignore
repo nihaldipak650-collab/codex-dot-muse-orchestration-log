@@ -1,0 +1,17 @@
+# Public allowlisted snapshot only
+.env
+.env.*
+*.pem
+*.key
+*session*.json
+**/.mcp-session.json
+**/browser-profile/**
+**/user-data/**
+**/cookies*
+**/credentials*
+source_snapshots/
+local_full/
+__pycache__/
+*.zip
+*.pdf
+*.png

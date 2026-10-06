@@ -1,0 +1,45 @@
+{
+  "project": "Codex DOT Muse orchestration engineering/research log",
+  "freeze_date": "2026-10-06",
+  "timezone": "Asia/Shanghai",
+  "freeze_ready": "YES",
+  "archive_state": "FINAL_TIME_BOUNDED_FREEZE",
+  "working_capture": {
+    "start": "2026-10-06T13:52:18.426270+08:00",
+    "end": "2026-10-06T13:52:27.390649+08:00"
+  },
+  "final_capture": {
+    "start": "2026-10-06T14:02:49.928326+08:00",
+    "end": "2026-10-06T14:02:51.194154+08:00"
+  },
+  "regression_status_reported": "INVALIDATED_PREFLIGHT_NOT_CONFIRMED",
+  "regression_complete_confirmed": false,
+  "regression_increment_status": "RESCANNED_AND_CAPTURED_AT_FINAL_CUTOFF",
+  "files_indexed_unique_sources": 1588,
+  "files_copied_unique_sources": 1527,
+  "snapshot_copy_instances": 2877,
+  "files_redacted": 3,
+  "files_excluded_unique_sources": 61,
+  "security_scan_status": "PATTERN_SCAN_PASS",
+  "timeline_status": "EXISTING_EVIDENCE_COVERED_V0_V1_ORIGINAL_GAPS_EXPLICIT",
+  "failure_catalog_status": "15_CASES_WITH_EVIDENCE_AND_UNCERTAINTY",
+  "review_status": "PASS",
+  "no_source_mutations": true,
+  "no_worker_messages_or_browser_calls": true,
+  "remote_mutations": false,
+  "push_ready": false,
+  "recommended_repo_name": "codex-dot-muse-orchestration-log",
+  "recommended_tag": "v0.1-freeze-2026-10-06",
+  "git_init": true,
+  "git_commit_ready": true,
+  "hash_scope": "All local regular files except .git and 10_FILE_HASHES.sha256 itself. Source hashes in index; generated file hashes in 10_FILE_HASHES only to avoid self-reference. Public hash manifest excludes itself and .git.",
+  "blockers": [],
+  "limitations": [
+    "Time-bounded live-source freeze; changes after final cutoff not captured",
+    "V0 and original V1 full run history unavailable; V1 dedupe copy preserved",
+    "B07 current worker outcome and full regression pass not confirmed",
+    "No stable 2.3x speedup or all-candidate verified claim",
+    "One malformed prose path captured as reference-quality issue, not invented missing artifact"
+  ],
+  "review_state": "READY_FOR_HUMAN_REVIEW"
+}

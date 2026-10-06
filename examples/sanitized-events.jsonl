@@ -1,0 +1,81 @@
+{"event": "START"}
+{"event": "SEND_CONFIRMED", "run_id": "8HR-20261006-DOT-AB-B01", "status": "RUN_ID visible after reload; no duplicate resend"}
+{"event": "SEND_CONFIRMED", "run_id": "8HR-20261006-MUSE-CD-B01", "status": "RUN_ID visible in thread; activity shows research in progress"}
+{"event": "RESULT_CAPTURED", "run_id": "8HR-20261006-DOT-AB-B03", "status": "COMPLETE"}
+{"event": "RESULT_CAPTURED", "run_id": "8HR-20261006-MUSE-CD-B01", "status": "COMPLETE"}
+{"event": "SEND_CONFIRMED", "run_id": "8HR-20261006-DOT-AB-B04", "status": "RUN_ID visible in exact DOT_WORKER thread; single send confirmed."}
+{"event": "RESUME_CONTROL", "run_id": "8HR-20261006-MUSE-CD-B02", "status": "Prior batch prompt retained; unrelated accidental QQ message explicitly excluded; worker reports searching official pages."}
+{"event": "RESULT_CAPTURED", "run_id": "8HR-20261006-DOT-AB-B04", "status": "COMPLETE"}
+{"event": "RESULT_CAPTURED", "run_id": "8HR-20261006-MUSE-CD-B02", "status": "COMPLETE"}
+{"event": "SEND_CONFIRMED", "run_id": "8HR-20261006-DOT-AB-B05", "status": "RUN_ID visible in exact DOT_WORKER thread after transcript refresh; not resent."}
+{"event": "SEND_CONFIRMED", "run_id": "8HR-20261006-MUSE-CD-B03", "status": "RUN_ID visible in exact Muse thread."}
+{"event": "RESULT_CAPTURED", "run_id": "8HR-20261006-DOT-AB-B05", "status": "COMPLETE"}
+{"event": "SEND_CONFIRMED", "run_id": "8HR-20261006-DOT-AB-B06", "status": "RUN_ID visible in exact DOT_WORKER thread."}
+{"event": "SEND_CONFIRMED", "run_id": "8HR-20261006-MUSE-CD-B03", "status": "RUN_ID visible in exact Muse thread."}
+{"event": "RESULT_CAPTURED", "run_id": "8HR-20261006-MUSE-CD-B03", "status": "COMPLETE_RAW_JSON_INVALID"}
+{"event": "SEND_CONFIRMED", "run_id": "8HR-20261006-MUSE-CD-B04", "status": "RUN_ID visible in exact Muse thread."}
+{"event": "CHECKPOINT", "structured_items": 33, "raw_unparsed_items": 5}
+{"event": "RESULT_CAPTURED", "run_id": "8HR-20261006-MUSE-CD-B04", "status": "COMPLETE"}
+{"event": "SEND_CONFIRMED", "run_id": "8HR-20261006-MUSE-CD-B05", "status": "RUN_ID visible in exact Muse thread; no duplicate resend."}
+{"event": "RESULT_CAPTURED", "run_id": "8HR-20261006-MUSE-CD-B05", "status": "COMPLETE"}
+{"event": "SEND_CONFIRMED", "run_id": "8HR-20261006-MUSE-CD-B06", "status": "RUN_ID visible in exact Muse thread; no duplicate resend."}
+{"event": "CHECKPOINT", "structured_items": 43, "raw_unparsed_items": 5}
+{"event": "RESULT_CAPTURED", "run_id": "8HR-20261006-MUSE-CD-B06", "status": "COMPLETE_RAW_JSON_INVALID"}
+{"event": "SEND_CONFIRMED", "run_id": "8HR-20261006-MUSE-CD-B07", "status": "RUN_ID visible in exact Muse thread; no duplicate resend."}
+{"event": "CHECKPOINT", "structured_items": 43, "raw_unparsed_items": 8}
+{"event": "RESULT_CAPTURED", "run_id": "8HR-20261006-MUSE-CD-B07", "status": "COMPLETE"}
+{"event": "SEND_CONFIRMED", "run_id": "8HR-20261006-MUSE-CD-B08", "status": "RUN_ID visible in exact Muse thread; no duplicate resend."}
+{"event": "CHECKPOINT", "structured_items": 47, "raw_unparsed_items": 8}
+{"event": "RESULT_CAPTURED", "run_id": "8HR-20261006-MUSE-CD-B08", "status": "COMPLETE"}
+{"event": "SEND_CONFIRMED", "run_id": "8HR-20261006-MUSE-CD-B09", "status": "RUN_ID visible in exact Muse thread; no duplicate resend."}
+{"event": "CHECKPOINT", "structured_items": 50, "raw_unparsed_items": 8}
+{"event": "RESULT_CAPTURED", "run_id": "8HR-20261006-MUSE-CD-B09", "status": "COMPLETE"}
+{"event": "SEND_CONFIRMED", "run_id": "8HR-20261006-MUSE-CD-B10", "status": "RUN_ID visible in exact Muse thread; no duplicate resend."}
+{"event": "CHECKPOINT", "structured_items": 54, "raw_unparsed_items": 8}
+{"event": "CHECKPOINT", "structured_items": 54, "raw_unparsed_items": 8}
+{"event": "RESULT_CAPTURED", "run_id": "8HR-20261006-MUSE-CD-B10", "status": "COMPLETE"}
+{"event": "SEND_CONFIRMED", "run_id": "8HR-20261006-MUSE-CD-B11", "status": "RUN_ID visible in exact Muse thread; no duplicate resend."}
+{"event": "CHECKPOINT", "structured_items": 57, "raw_unparsed_items": 8}
+{"event": "RESULT_CAPTURED", "run_id": "8HR-20261006-MUSE-CD-B11", "status": "COMPLETE"}
+{"event": "SEND_CONFIRMED", "run_id": "8HR-20261006-MUSE-CD-B12", "status": "RUN_ID visible in exact Muse thread; no duplicate resend."}
+{"event": "CHECKPOINT", "structured_items": 60, "raw_unparsed_items": 8}
+{"event": "RESULT_CAPTURED", "run_id": "8HR-20261006-MUSE-CD-B12", "status": "COMPLETE"}
+{"event": "CHECKPOINT", "structured_items": 61, "raw_unparsed_items": 8}
+{"event": "CHECKPOINT", "structured_items": 61, "raw_unparsed_items": 8}
+{"event": "CHECKPOINT", "structured_items": 61, "raw_unparsed_items": 8}
+{"event": "CHECKPOINT", "structured_items": 61, "raw_unparsed_items": 8}
+{"event": "DEDUP_CHECK"}
+{"event": "CHECKPOINT", "structured_items": 61, "raw_unparsed_items": 8}
+{"event": "CHECKPOINT", "structured_items": 61, "raw_unparsed_items": 8}
+{"raw_unparsed_items": 8, "event": "CHECKPOINT", "structured_items": 61}
+{"raw_unparsed_items": 8, "event": "FINAL_CHECKPOINT", "structured_items": 61}
+{"event": "POSTRUN_RESUME_AND_SEND", "run_id": "8HR-20261006-DOT-AB-B06"}
+{"event": "POSTRUN_RESULT_CAPTURED", "run_id": "8HR-20261006-DOT-AB-B06", "status": "COMPLETE", "ledger_rows": 71, "structured_items": 63, "raw_unparsed_items": 8}
+{"event": "POSTRUN_SEND_CONFIRMED", "run_id": "POSTRUN-20261006-DOT-AB-B07", "status": "RUN_ID visible in exact DOT_WORKER thread after refresh; composer cleared; no duplicate resend."}
+{"event": "POSTRUN_WAIT_CHECK", "run_id": "POSTRUN-20261006-DOT-AB-B07", "status": "SENT_AND_READ_NO_RESPONSE_AFTER_12M"}
+{"event": "POSTRUN_WAIT_CHECK", "run_id": "POSTRUN-20261006-DOT-AB-B07", "status": "SENT_AND_READ_NO_RESPONSE_AFTER_20M"}
+{"event": "LOCAL_ARTIFACT_RECONCILIATION", "ledger_rows": 71, "new_candidates": 0}
+{"event": "RESUME_SYNTHESIS_AND_TARGETED_CHECKS", "new_candidates": 0, "ledger_rows": 71}
+{"event": "WORKER_CONTROL_UNAVAILABLE_AFTER_TWO_ATTEMPTS_LOCAL_WORK_ADVANCED", "new_candidates": 0, "ledger_rows": 71}
+{"event": "REGRESSION_START", "run_id": "REGRESSION-20261006-131237"}
+{"event": "REGRESSION_VALUE_A_METHOD_CHECKS", "run_id": "REGRESSION-20261006-131237"}
+{"event": "REGRESSION_CONTROL_TIMEOUT"}
+{"event": "REGRESSION_VALUE_D_DEADLINE_CONFLICT", "new_candidates": 0}
+{"event": "REGRESSION_VALUE_PRIMARY_BOUNDARIES"}
+{"event": "REGRESSION_CONTROL_TIMEOUT"}
+{"event": "REGRESSION_VALUE_A_FULLTEXT_CORRECTIONS", "new_candidates": 0}
+{"event": "REGRESSION_VALUE_C_ROUTE_GATES"}
+{"event": "REGRESSION_VALUE_D_SUBTRACK_URGENCY"}
+{"event": "REGRESSION_VALUE_B_CONTRACT_COMPARE"}
+{"event": "REGRESSION_VALUE_C_TARGET_YEAR_BOUNDARY"}
+{"event": "REGRESSION_VALUE_A_TEACHING_METHOD_BOUNDARIES"}
+{"time_utc": "2026-10-06T05:41:12.237950+00:00", "event": "REGRESSION_VALUE_C_CSU_PRIMARY_SUPPLEMENT", "new_candidates": 0}
+{"time_utc": "2026-10-06T05:42:06.077902+00:00", "event": "REGRESSION_VALUE_D_PRIORITY_AND_STALE_FIELD_REPAIR", "new_candidates": 0}
+{"time_utc": "2026-10-06T05:42:51.979939+00:00", "event": "REGRESSION_VALUE_C_ROUTE_SCOPE_AND_PRESENTATION_GATES", "new_candidates": 0}
+{"time_utc": "2026-10-06T05:43:38.875069+00:00", "event": "REGRESSION_VALUE_A_SYNTHESIS_MEASURE_SEPARATION"}
+{"time_utc": "2026-10-06T05:44:39.344978+00:00", "event": "REGRESSION_VALUE_B_RUNTIME_VS_CONTRACT_BOUNDARY"}
+{"time_utc": "2026-10-06T05:46:04.172133+00:00", "event": "REGRESSION_VALUE_ACTIVE_FIELDS_SOURCE_AUTHORITY_REPAIR", "new_candidates": 0}
+{"time_utc": "2026-10-06T05:46:47.301903+00:00", "event": "REGRESSION_VALUE_B_PAUSE_AND_OWNERSHIP_GATES"}
+{"time_utc": "2026-10-06T05:47:33.873398+00:00", "event": "REGRESSION_VALUE_CANONICAL_SCOPE_REVIEW", "ledger_rows": 71, "new_candidates": 0}
+{"time_utc": "2026-10-06T05:53:14.741331+00:00", "event": "REGRESSION_PREFLIGHT_RESET_BY_USER"}
+{"time_utc": "2026-10-06T06:01:36.008772+00:00", "event": "RESET_B07_REAL_REPLY_OBSERVED"}
