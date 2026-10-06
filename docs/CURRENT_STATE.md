@@ -1,3 +1,5 @@
+> **Historical snapshot:** The original text below describes the 14:02 collection cutoff, not the latest project status. See [the later closeout / three-hour result](phase-closeout-20261006/START_HERE.md). Original historical records are preserved.
+
 # 当前状态（截至采集截止时间）
 
 证据分级：CONFIRMED=本次核对本地原始记录/工件；REPORTED=既有Agent或worker报告，未独立复核；INFERENCE=基于证据的解释；UNKNOWN=现有证据不能确定。文件存在、Agent声称完成、结构检查通过均不等于内容正确或运行验收通过。

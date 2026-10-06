@@ -1,3 +1,5 @@
+> **Historical snapshot:** The original text below describes the 14:02 collection cutoff, not the latest project status. See [the later closeout / three-hour result](20261006_3H_COORDINATOR_SUMMARY.md). Original historical records are preserved.
+
 # Regression采集状态
 
 REPORTED run_id=REGRESSION-20261006-131237；status=INVALIDATED_PREFLIGHT_NOT_CONFIRMED；old_start_not_valid=True；actual_start_utc=None；actual_hard_stop_utc=None；B07=INCOMPLETE_METADATA_CAPTURED_0_ACTUAL_ITEMS。

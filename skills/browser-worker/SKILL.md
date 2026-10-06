@@ -13,7 +13,9 @@ Registered actions use `--transport registered --observation <actual fresh local
 
 ## Worker aliases and invocation
 
-Work from the repository root containing `runtime/`. Python 3.9+ and PowerShell 7 are required. Copy `workers.example.json` to ignored `workers.local.json`; replace URLs locally and point each alias to its provider-selector config. Never paste private URLs into public artifacts. Alias binding is hashed in ignored `sessions.local/`; browser conversations retain semantic history. If an alias URL changes, stop on THREAD_BINDING_MISMATCH rather than silently continuing another thread.
+Current phase context: [closeout handoff](../../docs/phase-closeout-20261006/START_HERE.md). The examples in this section use the **standalone default**, not the preferred registered path. Follow the registered workflow above with explicit transport/observation arguments. No new live run is authorized by this documentation.
+
+Work from the repository root containing `runtime/`. Python 3.9+ is required; PowerShell 7 is required only for standalone mode. Copying this Skill directory alone does not include the repository runtime dependencies. Copy `workers.example.json` to ignored `workers.local.json`; replace URLs locally and point each alias to its provider-selector config. Never paste private URLs into public artifacts. Alias binding is hashed in ignored `sessions.local/`; browser conversations retain semantic history. If an alias URL changes, stop on THREAD_BINDING_MISMATCH rather than silently continuing another thread.
 
 ```sh
 python skills/browser-worker/scripts/worker.py inspect --worker dot
@@ -27,7 +29,7 @@ python skills/browser-worker/scripts/worker.py collect --worker dot --timeout 10
 ## Actions
 
 - **inspect(worker):** inspect control and existing tab, without filling/submitting or opening a missing tab. Return pending/session truth alongside diagnostics. It does not infer application downtime or extension disconnection from a timeout.
-- **ask(worker, task):** reserve a turn and invoke one runtime send. A pending/uncertain previous turn blocks new sends. The wrapper prefixes a fresh RUN_ID and substitutes `{RUN_ID}` in the task.
+- **ask(worker, task):** reserve a turn. Standalone invokes one runtime send; registered returns PREPARED text for Codex to send using its existing browser tools. A pending/uncertain previous turn blocks new sends. The wrapper prefixes a fresh RUN_ID and substitutes `{RUN_ID}` in the task.
 - **continue(worker, message):** same alias/thread binding; requires a confirmed successful prior turn and no pending delivery. It adds feedback to the existing conversation, not a fresh worker or a copied chat transcript.
 - **collect(worker):** read the pending turn using its saved hash baseline and original RUN_ID. Never fill, press Enter, navigate a missing conversation or resend. Each call has a bounded observation window and separate result file.
 

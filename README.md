@@ -1,5 +1,9 @@
 # Browser Worker Skill · Codex / DOT / Muse
 
+<!-- PHASE_CLOSEOUT_20261006 -->
+> **Phase closeout - 2026-10-06:** Start with the [current handoff](docs/phase-closeout-20261006/START_HERE.md), [review](docs/phase-closeout-20261006/REPORT.md) and [remaining seams](docs/phase-closeout-20261006/STATE_AND_GAPS.md). Technical baseline: `f8dcb4b`; V3 provider-live validation remains **NOT_RUN**. The earlier registered-tool workflow did complete a [three-hour coordinator regression](experiments/regression/20261006_3H_COORDINATOR_SUMMARY.md), recovering B07 and bringing the research ledger to 74 records. That is historical execution evidence, not V3 live acceptance. Feature development and new live trials are paused for this closeout.
+
+
 **Short runs. Persistent workers. Long-running goals.**
 
 A Codex skill for calling existing web AI conversations repeatedly while retaining truthful delivery/session state. Codex plans and verifies; the skill communicates. The live loop remains experimental and unverified.
@@ -108,6 +112,10 @@ These describe different responsibilities, not a performance ranking. Their list
 
 ## Browser Worker Skill
 
+**Choose the execution path first.** V3 prefers [registered Playwright operation](skills/browser-worker/references/full-workflow.md). In that path the wrapper prepares a turn; Codex performs browser actions with its registered tools and supplies fresh observations for collection. It is not an automatically registered atomic MCP tool.
+
+The examples below are the **standalone diagnostic path**: omitting `--transport` currently selects `standalone`. They require PowerShell 7. Registered operation requires Python plus the existing browser tools; see the full workflow guide instead of using these commands as a registered-path quickstart.
+
 Call a local alias rather than exposing private thread URLs to the coordinator interface:
 
 ```sh
@@ -125,7 +133,7 @@ Run `python tests/test_worker_skill.py` for alias, persistence, same-thread, col
 
 **EXPERIMENTAL / UNVERIFIED LIVE LOOP — LIVE_SMOKE_NOT_YET_VERIFIED.** Code now connects to an existing Playwright MCP endpoint, selects/opens an exact worker tab, establishes baseline, fills and submits one RUN_ID prompt, checks a new user-message receipt, observes a correlated reply and saves JSON. Local fake-MCP tests exercise the real CLI and transport. Real tab discovery currently times out, so no successful live ACK is claimed.
 
-See [runtime setup and commands](runtime/README.md), [result schema](schemas/runtime-result.schema.json) and [synthetic tests](tests/test_runtime.py). PowerShell 7 is required; your worker URL and selector configuration stay local. General replies require a verified completion selector; the default smoke path accepts an exact `ACK <RUN_ID>`. There is no automatic resend, multi-worker scheduler or attachment capture.
+See [runtime setup and commands](runtime/README.md), [result schema](schemas/runtime-result.schema.json) and [synthetic tests](tests/test_runtime.py). PowerShell 7 is required; your worker URL and selector configuration stay local. General replies require a verified completion selector; the default smoke path accepts an exact `ACK <RUN_ID>`. The standalone V0 communication script has no automatic resend, multi-worker scheduler or attachment capture. V3 artifact handling is a separate shared layer; its live acquisition remains unverified.
 
 ```sh
 pwsh -NoProfile -File tests/test_states.ps1
