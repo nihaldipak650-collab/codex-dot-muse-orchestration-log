@@ -28,6 +28,7 @@ def invoke(args):
         state=json.loads(path.read_text()) if path.exists() else {'worker_alias':args.worker,'safe_worker_id':binding,'thread_binding':binding,'last_run_id':None,'last_confirmed_user_message_hash':None,'last_correlated_reply_hash':None,'pending':False,'last_status':'NEW','updated_at':now(),'turn_count':0,'next_state':'UNSTRUCTURED'}
         if state['thread_binding']!=binding:raise ValueError('THREAD_BINDING_MISMATCH')
         if args.transport=='registered':
+            if state['pending'] and state.get('transport')!='registered':raise ValueError('STANDALONE_PENDING_USE_STANDALONE_COLLECT')
             if not args.observation:raise ValueError('OBSERVATION_REQUIRED')
             flow=Workflow(args.state_dir,args.worker,worker)
             observed=json.loads(args.observation.read_text(encoding='utf-8-sig'))
@@ -63,7 +64,7 @@ def invoke(args):
         else:
             message='RUN_ID='+run+'\nInclude this RUN_ID in your reply.\n'+args.message.replace('{RUN_ID}',run)
             cmd+=['-Message',message]
-            state.update(last_run_id=run,pending=True,last_status='IN_FLIGHT',turn_count=state['turn_count']+1,updated_at=now())
+            state.update(last_run_id=run,pending=True,last_status='IN_FLIGHT',turn_count=state['turn_count']+1,updated_at=now(),transport='standalone')
             save(path,state) # Durable reservation before any possible send.
         try:
             proc=subprocess.run(cmd,capture_output=True,encoding='utf-8',errors='replace',timeout=args.timeout+120)
@@ -81,6 +82,7 @@ def invoke(args):
             if result['submit_confirmed']:state['last_confirmed_user_message_hash']=result['message_sha256']
             if result['reply_received']:
                 state['last_correlated_reply_hash']=sha(result['reply_text']);state['next_state']=worker_next(result['reply_text'])
+                state.setdefault('receipt_runs',{})[state['last_run_id']]=run
             state['updated_at']=now();save(path,state)
         return {'action':args.action,'status':status,'session':state,'result':result,'runtime_exit':proc.returncode}
     finally:lock.unlink()

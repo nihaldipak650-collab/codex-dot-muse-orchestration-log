@@ -4,6 +4,8 @@
 
 A Codex skill for calling existing web AI conversations repeatedly while retaining truthful delivery/session state. Codex plans and verifies; the skill communicates. The live loop remains experimental and unverified.
 
+**Browser Worker 3.0.0:** [full workflow](skills/browser-worker/references/full-workflow.md) restores registered Playwright operation, correlated artifact discovery, ZIP/local read, SHA-256 and whole-row dedupe, Muse inline fallback, partial-result preservation and stale-state reconciliation. [Design and full live regression](docs/BROWSER_WORKER_V3_DESIGN.md) · [current test/live evidence](docs/BROWSER_WORKER_V3_EVIDENCE.md). Local passes do not establish provider-live compatibility.
+
 Codex uses **Playwright / Playwright MCP to operate existing DOT and Muse conversations in a real browser**: send prompts, observe replies, save local results, then decide the next task. This project studies how to keep those workers moving when replies are slow, delivery is uncertain, and the coordinator wants to stop.
 
 [![Status: research](https://img.shields.io/badge/status-research-blue)](#status-and-limits)

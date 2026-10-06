@@ -1,5 +1,7 @@
 # Single-worker communication runtime
 
+For V3 live operation, prefer [Full Workflow Browser Worker](../skills/browser-worker/references/full-workflow.md): registered Playwright tools plus `workflow.py`/`browser_plan.py`. This HTTP runtime remains the standalone diagnostic transport. V3 accepts complete RUN_ID-bound structured replies in addition to ACK/UI completion, preserves correlated partial text on timeout, and shares the local artifact ingestion path. Current verification is recorded in [V3 evidence](../docs/BROWSER_WORKER_V3_EVIDENCE.md).
+
 **EXPERIMENTAL / UNVERIFIED LIVE LOOP — LIVE_SMOKE_NOT_YET_VERIFIED.** Local fake-MCP integration tests pass; the real endpoint initialized and listed tools, but browser tab discovery timed out. No live message or ACK receipt was confirmed.
 
 ## What it does
@@ -39,7 +41,7 @@ pwsh -NoProfile -File runtime/single_worker_v0.ps1 `
   -RunId $run -Message $message -Timeout 120
 ```
 
-`-WorkerUrl` can override config. `-Inspect` selects/opens the configured tab and reads baseline without filling or submitting. All runs require an explicit URL via command or local config. `-OutputDirectory` can place private results outside the checkout.
+`-WorkerUrl` can override config. `-Inspect` selects an existing configured tab and reads baseline without filling, submitting or opening a missing tab. All runs require an explicit URL via command or local config. `-OutputDirectory` can place private results outside the checkout.
 
 ## Expected result and states
 

@@ -43,7 +43,10 @@ def load(path):
 
 
 def instant(value):
-    return datetime.fromisoformat(value.replace("Z", "+00:00")).astimezone(timezone.utc)
+    parsed=datetime.fromisoformat(value.replace("Z", "+00:00"))
+    if parsed.tzinfo is None:
+        raise ValueError("TIMEZONE_REQUIRED")
+    return parsed.astimezone(timezone.utc)
 
 
 def parse_result(text, suffix=".json"):
@@ -113,6 +116,20 @@ class Workflow:
     def save(self):
         self.state["updated_at"] = stamp()
         write(self.path, self.state)
+
+    def receipt(self, run):
+        if not re.fullmatch(r"BW-[a-f0-9]{32}", run):
+            raise ValueError("INVALID_RUN_ID")
+        path=self.base / "turns" / (run + ".json")
+        if path.exists():
+            return load(path)
+        resolved=self.state.get('receipt_runs',{}).get(run,run)
+        if not re.fullmatch(r"BW-[a-f0-9]{32}", resolved):
+            raise ValueError("INVALID_RECEIPT_POINTER")
+        receipt=load(self.base / "runs" / (resolved + ".json"))
+        if receipt.get('worker_identifier_safe',{}).get('url_sha256') != self.binding:
+            raise ValueError("RECEIPT_THREAD_MISMATCH")
+        return receipt
 
     def observation(self, observed):
         if observed.get("url_sha256") != self.binding:
@@ -188,8 +205,7 @@ class Workflow:
     def ingest(self, source, run, inline=False):
         if not re.fullmatch(r"BW-[a-f0-9]{32}", run):
             raise ValueError("INVALID_RUN_ID")
-        turnpath = self.base / "turns" / (run + ".json")
-        turn = load(turnpath) if turnpath.exists() else load(self.base / "runs" / (run + ".json"))
+        turn = self.receipt(run)
         if not turn.get("reply_received"):
             raise ValueError("NO_CORRELATED_REPLY")
         source = Path(source)
@@ -218,12 +234,17 @@ class Workflow:
                         raise ValueError("ZIP_LIMIT_OR_DUPLICATE_NAMES")
                     for item in members:
                         name = PurePosixPath(item.filename)
+                        if name.as_posix() != item.filename.rstrip('/') or re.search(r'[<>"|?*\x00-\x1f]',item.filename):
+                            raise ValueError("NON_CANONICAL_ZIP_MEMBER")
                         if name.is_absolute() or ".." in name.parts or "\\" in item.filename or ":" in item.filename or (item.external_attr >> 16) & 0o170000 == 0o120000:
                             raise ValueError("UNSAFE_ZIP_MEMBER")
+                        if any(part.endswith((".", " ")) or re.fullmatch(r"(?i)(CON|PRN|AUX|NUL|COM[1-9]|LPT[1-9])(?:\..*)?",part) for part in name.parts):
+                            raise ValueError("UNSAFE_WINDOWS_ZIP_MEMBER")
                     for item in members:
                         if item.is_dir():
                             continue
                         dest = folder / "unpacked" / item.filename
+                        dest.resolve().relative_to((folder / "unpacked").resolve())
                         dest.parent.mkdir(parents=True, exist_ok=True)
                         dest.write_bytes(archive.read(item))
                         files.append((dest, dest.suffix.lower()))
@@ -255,10 +276,18 @@ class Workflow:
                 actual = {e["name"].removeprefix("unpacked/"): e["sha256"] for e in record["files"] if e["name"] != "unpacked/manifest.json"}
                 if not isinstance(declarations, dict) or declarations != actual:
                     record["errors"].append({"code": "MANIFEST_FILE_HASH_MISMATCH"})
+                if not {"summary.md"} <= actual.keys() or not ({"results.json", "results.csv"} & actual.keys()):
+                    record["errors"].append({"code": "BUNDLE_REQUIRED_FILES_MISSING"})
         elif suffix == ".json":
-            parsed = parse_result(raw.decode("utf-8-sig"))
-            if not isinstance(parsed["data"], dict) or parsed["data"].get("run_id") != run:
-                record["errors"].append({"code": "INLINE_BINDING_REQUIRED"})
+            try:
+                decoded=raw.decode("utf-8-sig")
+                parsed = parse_result(decoded)
+                if not isinstance(parsed["data"], dict) or parsed["data"].get("run_id") != run:
+                    record["errors"].append({"code": "INLINE_BINDING_REQUIRED"})
+                if inline and digest(decoded) != (turn.get("reply_sha256") or digest(turn.get("reply_text", ""))):
+                    record["errors"].append({"code": "INLINE_REPLY_HASH_MISMATCH"})
+            except UnicodeError:
+                record["errors"].append({"code": "INLINE_ENCODING_INVALID"})
         else:
             record["errors"].append({"code": "UNBOUND_RESULT"})
         indexpath = self.base / "artifact-index.json"
@@ -287,8 +316,7 @@ class Workflow:
     def discover(self, observed):
         self.observation(observed)
         run = self.state["last_run_id"]
-        turnpath = self.base / "turns" / (run + ".json")
-        turn = load(turnpath) if turnpath.exists() else load(self.base / "runs" / (run + ".json"))
+        turn = self.receipt(run)
         if not turn.get("reply_received"):
             raise ValueError("NO_CORRELATED_REPLY")
         reply_hash = turn.get("reply_sha256") or digest(turn["reply_text"])
@@ -298,14 +326,20 @@ class Workflow:
         if not isinstance(candidates, list) or len(candidates) > 30:
             raise ValueError("ARTIFACT_DISCOVERY_LIMIT")
         entries = []
+        rawpath = self.base / "artifacts" / run / "reply.raw.txt"
+        parsed = parse_result(rawpath.read_text(encoding="utf-8")) if rawpath.exists() else parse_result(turn.get("reply_text", ""))
+        declarations = parsed["data"].get("artifacts", []) if isinstance(parsed["data"], dict) else []
+        if isinstance(declarations, list):
+            entries = [{"name": v["name"], "state": "DECLARED"} for v in declarations if isinstance(v, dict) and isinstance(v.get("name"), str)]
         for item in candidates:
             if not isinstance(item, dict) or not item.get("name") or not item.get("target"):
                 raise ValueError("ARTIFACT_LOCATOR_REQUIRED")
+            entries = [v for v in entries if v["name"] != item["name"]]
             entries.append({"name": item["name"], "target": item["target"], "state": "VISIBLE",
                             "observed_at": observed["observed_at"], "reply_sha256": reply_hash})
         result = {"run_id": run, "provider": self.worker.get("provider", self.alias),
                   "policy": "INLINE_FALLBACK" if self.worker.get("provider", self.alias) == "muse" else "BUNDLE_FIRST",
-                  "artifacts": entries, "primary": next((v for v in entries if v["name"].lower().endswith(".zip")), entries[0] if entries else None)}
+                  "artifacts": entries, "primary": next((v for v in entries if v["state"] == "VISIBLE" and v["name"].lower().endswith(".zip")), next((v for v in entries if v["state"] == "VISIBLE"), None))}
         write(self.base / "artifacts" / run / "discovery.json", result)
         return result
 
@@ -356,8 +390,9 @@ def main():
             result = {"status": "CAPSULE_SAVED", "provenance": "COORDINATOR_SUPPLIED_REQUIRES_REVIEW"}
         print(json.dumps(result, ensure_ascii=False))
         return 0
-    except (ValueError, KeyError, TypeError, OSError):
-        print(json.dumps({"status": "WORKFLOW_INPUT_OR_STATE_ERROR"}))
+    except (ValueError, KeyError, TypeError, OSError) as error:
+        code=str(error) if isinstance(error, ValueError) and re.fullmatch("[A-Z_]+",str(error)) else "WORKFLOW_INPUT_OR_STATE_ERROR"
+        print(json.dumps({"status": code}))
         return 1
     finally:
         if indexlock is not None:

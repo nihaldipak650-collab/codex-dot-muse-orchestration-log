@@ -153,6 +153,37 @@ class WorkflowTests(unittest.TestCase):
         self.assertEqual("PARTIAL", parsed["parse_status"])
         self.assertEqual(2, len(parsed["rows"]))
 
+    def test_binary_json_and_windows_zip_names_keep_receipts(self):
+        prepared,_=self.deliver()
+        source=self.root/'binary.json'
+        source.write_bytes(b'\xff')
+        record=self.flow.ingest(source,prepared['run_id'],inline=True)
+        self.assertEqual('READ',record['state'])
+        self.assertIn({'code':'INLINE_ENCODING_INVALID'},record['errors'])
+        for name in ['x./a.json','CON.json','trailing /a.json','x//a.json','x/./a.json']:
+            path=self.root/'unsafe.zip'
+            with zipfile.ZipFile(path,'w') as z:z.writestr(name,'{}')
+            self.assertEqual('DOWNLOADED',self.flow.ingest(path,prepared['run_id'])['state'])
+
+    def test_inline_modified_content_not_accepted(self):
+        prepared,raw=self.deliver()
+        source=self.root/'modified.json'
+        source.write_text(raw.replace('"id": 1','"id": 99'))
+        receipt=self.flow.ingest(source,prepared['run_id'],inline=True)
+        self.assertEqual('READ',receipt['state'])
+        self.assertIn({'code':'INLINE_REPLY_HASH_MISMATCH'},receipt['errors'])
+
+    def test_standalone_collection_receipt_resolves_original_run(self):
+        run='BW-'+'a'*32
+        collected='BW-'+'b'*32
+        raw=json.dumps({'run_id':run,'state':'DONE','results':[{'id':1}]})
+        self.flow.state.update(last_run_id=run,receipt_runs={run:collected})
+        w.write(self.root/'runs'/f'{run}.json',{'reply_received':False})
+        w.write(self.root/'runs'/f'{collected}.json',{'reply_received':True,'reply_text':raw,'worker_identifier_safe':{'url_sha256':self.flow.binding}})
+        source=self.root/'late.json'
+        source.write_text(raw)
+        self.assertEqual('VALIDATED',self.flow.ingest(source,run,inline=True)['state'])
+
 
 if __name__ == "__main__":
     unittest.main()

@@ -19,6 +19,7 @@ class WorkerSkillTests(unittest.TestCase):
         cmd=[sys.executable,str(SCRIPT),action,'--worker',kw.get('worker','dot'),'--workers',str(self.aliases),'--state-dir',str(self.dir/'state'),'--timeout','3','--allow-example']
         if kw.get('message'):cmd+=['--message',kw['message']]
         if kw.get('max_turns'):cmd+=['--max-turns',str(kw['max_turns'])]
+        if kw.get('transport'):cmd+=['--transport',kw['transport']]
         p=subprocess.run(cmd,capture_output=True,encoding='utf-8',errors='replace',timeout=45)
         self.assertTrue(p.stdout.strip(),p.stderr)
         data=json.loads(p.stdout);return data
@@ -75,5 +76,26 @@ class WorkerSkillTests(unittest.TestCase):
         changed=json.loads(self.aliases.read_text());changed['workers']['dot']['url']='https://worker.example/conversation/other';self.aliases.write_text(json.dumps(changed))
         self.assertEqual('THREAD_BINDING_MISMATCH',self.call('continue',message='next')['status'])
         self.assertEqual(1,self.server.state['sends'])
+
+    def test_registered_to_standalone_pending_and_late_artifact_receipt(self):
+        import sys
+        sys.path.insert(0,str(ROOT/'runtime'))
+        from workflow import Workflow
+        self.call('ask',message='Reply exactly: ACK {RUN_ID}')
+        statepath=self.dir/'state/dot.json'
+        state=json.loads(statepath.read_text());state['transport']='registered';statepath.write_text(json.dumps(state))
+        self.server.state['scenario']='no_reply'
+        pending=self.call('continue',message='Reply exactly: ACK {RUN_ID}')
+        self.assertEqual('REPLY_TIMEOUT',pending['status'])
+        self.assertEqual('standalone',pending['session']['transport'])
+        self.assertEqual('STANDALONE_PENDING_USE_STANDALONE_COLLECT',self.call('collect',transport='registered')['status'])
+        self.server.state['scenario']='success'
+        resolved=self.call('collect')
+        self.assertEqual('SUCCESS',resolved['status'])
+        original=pending['session']['last_run_id']
+        flow=Workflow(self.dir/'state','dot',{'url':URL})
+        self.assertTrue(flow.receipt(original)['reply_received'])
+        self.assertNotEqual(original,resolved['session']['receipt_runs'][original])
+        self.assertEqual(2,self.server.state['sends'])
 
 if __name__=='__main__':unittest.main()
