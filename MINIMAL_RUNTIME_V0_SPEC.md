@@ -1,5 +1,7 @@
 # Minimal Runnable V0 — single worker
 
+Historical design baseline from before `GITHUB-RUNTIME-SPRINT-20261006`. Experimental code now exists in [runtime/README.md](runtime/README.md), with passing local tests and an unverified live loop. The specification below preserves the original proposed design and pre-implementation status.
+
 **Proposed implementation specification, not shipped software.** The public clone currently cannot execute this loop. The [gap audit](PROJECT_GAP_AUDIT.md) distinguishes historical operation from reusable code.
 
 Goal: connect browser control, select one existing worker conversation, send one prompt, prove submission, observe its reply, save it locally and return an explicit state. No refill scheduler, model implementation, internal API proxy or multi-agent platform.

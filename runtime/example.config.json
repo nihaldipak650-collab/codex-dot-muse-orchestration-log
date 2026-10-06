@@ -1,0 +1,10 @@
+{
+  "endpoint": "http://localhost:8931/mcp",
+  "worker_url": "https://worker.example/conversation/replace-me",
+  "composer": "[role=\"textbox\"],textarea",
+  "users": "[data-message-author-role=\"user\"]",
+  "assistants": "[data-message-author-role=\"assistant\"]",
+  "generating": "[data-testid=\"stop-button\"]",
+  "completion": "",
+  "poll_seconds": 1
+}

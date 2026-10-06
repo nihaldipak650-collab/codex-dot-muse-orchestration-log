@@ -1,6 +1,6 @@
 # Contributing
 
-Start with evidence explanations, documentation and synthetic fixtures. This repository publishes research and coordinator playbooks; it does not yet provide a reusable browser-worker runtime. You can contribute without a DOT/Muse account or API key.
+Start with evidence explanations, documentation and synthetic fixtures. This repository publishes research, coordinator playbooks and an experimental single-worker runtime whose live loop remains unverified. Local runtime tests and small fixture contributions need no DOT/Muse account or API key.
 
 ## First contributions
 
@@ -23,6 +23,13 @@ Acceptance: each case declares its synthetic origin, observed signal, unknown fi
 Deliver `docs/EVENT_FIELD_GUIDE.md` explaining the [public event sample](examples/sanitized-events.jsonl): timestamps, lane/run identity, observation versus worker claim, and evidence confidence.
 
 Acceptance: include a small source-linked example, explain timestamp ties/unknowns without inventing order, and preserve reported versus confirmed distinctions. No private originals or timeline viewer needed.
+
+## Small runtime contributions
+
+- **Ambiguous submission fixture (1–2 hours):** add an integration case where Enter succeeds but user-message visibility cannot be confirmed. Assert DELIVERY_UNKNOWN, one send only and a valid result; extend [the fake-MCP harness](tests/test_runtime.py).
+- **Tab matching fixture (1–2 hours):** cover the actual MCP current-tab marker and URL redirects in [state tests](tests/test_states.ps1). Preserve exact matching; define any supported normalization explicitly and ensure no unrelated tab is selected.
+
+Run both local test commands from [runtime/README.md](runtime/README.md). No worker account needed. These are scoped proposals, not fabricated live issues.
 
 ## Workflow
 

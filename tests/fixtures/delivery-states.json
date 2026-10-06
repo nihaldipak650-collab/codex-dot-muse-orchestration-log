@@ -1,0 +1,15 @@
+{
+  "synthetic": true,
+  "run_id": "FIXTURE-RUN",
+  "message": "RUN_ID=FIXTURE-RUN\nReply exactly: ACK FIXTURE-RUN",
+  "baseline": {"users": ["old prompt"], "assistants": ["ACK OLD-RUN"], "observed_at": "2026-01-01T00:00:00Z"},
+  "cases": [
+    {"name": "draft_only", "users": [], "assistants": [], "composer": "RUN_ID=FIXTURE-RUN", "generating": false, "submitted": false, "reply": false},
+    {"name": "filled_not_sent", "users": ["old prompt"], "assistants": ["ACK OLD-RUN"], "composer": "RUN_ID=FIXTURE-RUN", "generating": false, "submitted": false, "reply": false},
+    {"name": "submitted_no_reply", "new_user": true, "assistants": ["ACK OLD-RUN"], "generating": false, "submitted": true, "reply": false},
+    {"name": "reply_visible", "new_user": true, "assistants": ["ACK OLD-RUN", "ACK FIXTURE-RUN"], "generating": true, "submitted": true, "reply": true},
+    {"name": "reply_received", "new_user": true, "assistants": ["ACK OLD-RUN", "ACK FIXTURE-RUN"], "generating": false, "submitted": true, "reply": true},
+    {"name": "old_reply_same_run", "new_user": true, "baseline_assistants": ["ACK FIXTURE-RUN"], "assistants": ["ACK FIXTURE-RUN"], "generating": false, "submitted": true, "reply": false},
+    {"name": "pre_send_observation", "new_user": true, "assistants": ["ACK FIXTURE-RUN"], "observed_at": "2025-12-31T23:59:59Z", "generating": false, "submitted": true, "reply": false}
+  ]
+}

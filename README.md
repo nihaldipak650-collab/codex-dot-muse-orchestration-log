@@ -12,7 +12,7 @@ Codex uses **Playwright / Playwright MCP to operate existing DOT and Muse conver
 
 [Explore in two minutes](#quick-start-explore-the-project) · [Read the failures](docs/FAILURE_MODES.md) · [Pick a first contribution](CONTRIBUTING.md#first-contributions)
 
-Current deliverables: experiment reports, failure cases, coordinator playbooks and example contracts. **This clone has no reusable worker-communication runtime.** The [gap audit](PROJECT_GAP_AUDIT.md) and [single-worker V0 specification](MINIMAL_RUNTIME_V0_SPEC.md) identify what to build next.
+Current deliverables include experiment reports, coordinator playbooks and an **experimental single-worker communication runtime** with local integration tests. **LIVE_SMOKE_NOT_YET_VERIFIED:** the live endpoint initialized, but tab discovery timed out. Start with [Minimal Runtime](#minimal-runtime); the [earlier gap audit](PROJECT_GAP_AUDIT.md) records the pre-runtime baseline.
 
 ## How it works
 
@@ -31,7 +31,7 @@ flowchart TD
   C -.-> W["While a worker is pending: independent local work"]
 ```
 
-*Diagram of the recorded operating pattern, not a shipped runtime. The public record does not pin an extension or remote-transport topology.*
+*Diagram of the recorded operating pattern. The experimental runtime implements one worker communication loop, not the multi-lane scheduling shown here. The historical record does not pin an extension topology.*
 
 1. Human sets the goal, permissions and stop condition; Codex selects the next task.
 2. Browser control locates a worker tab, fills the normal conversation composer and submits the prompt. Filling alone does not prove submission.
@@ -100,6 +100,19 @@ Based on the [previous README comparison](BENCHMARK_REPOS.csv) and its [source r
 
 These describe different responsibilities, not a performance ranking. Their listed capabilities are README descriptions, not independently verified runtime results.
 
+## Minimal Runtime
+
+**EXPERIMENTAL / UNVERIFIED LIVE LOOP — LIVE_SMOKE_NOT_YET_VERIFIED.** Code now connects to an existing Playwright MCP endpoint, selects/opens an exact worker tab, establishes baseline, fills and submits one RUN_ID prompt, checks a new user-message receipt, observes a correlated reply and saves JSON. Local fake-MCP tests exercise the real CLI and transport. Real tab discovery currently times out, so no successful live ACK is claimed.
+
+See [runtime setup and commands](runtime/README.md), [result schema](schemas/runtime-result.schema.json) and [synthetic tests](tests/test_runtime.py). PowerShell 7 is required; your worker URL and selector configuration stay local. General replies require a verified completion selector; the default smoke path accepts an exact `ACK <RUN_ID>`. There is no automatic resend, multi-worker scheduler or attachment capture.
+
+```sh
+pwsh -NoProfile -File tests/test_states.ps1
+python tests/test_runtime.py
+```
+
+These local tests require no worker account. Follow the runtime guide for a live command; the exploration commands below only inspect published evidence.
+
 ## Quick Start: explore the project
 
 Requires Git; Python 3.9+ is optional for the read-only integrity check. No API key, browser session or worker account is needed to explore the evidence.
@@ -120,7 +133,7 @@ To inspect the original release snapshot, check out `v0.1-freeze-2026-10-06`. Th
 
 ## Roadmap and contributing
 
-The smallest runnable next step is [single-worker V0](MINIMAL_RUNTIME_V0_SPEC.md): connection/preflight, tab adapter, confirmed submission, correlated reply observation, and local capture/status behind one entry command. These five implementation pieces are missing as reusable code; historical interactions and state examples provide partial evidence, not installed functionality. Multi-worker refill follows only after that loop works. The wider priorities remain in the roadmap.
+The [single-worker V0 code](runtime/README.md) now implements connection, tab selection, submission receipt, reply correlation and result capture with fake-MCP tests. The next bottleneck is real browser connectivity, followed by validating provider selectors and a live ACK loop. Multi-worker refill follows only after that loop works. The [original V0 spec](MINIMAL_RUNTIME_V0_SPEC.md) remains a design baseline; the wider priorities remain in the roadmap.
 
 [Roadmap with acceptance criteria](docs/ROADMAP.md) · [Contributor guide](CONTRIBUTING.md) · [Open an issue](https://github.com/nihaldipak650-collab/codex-dot-muse-orchestration-log/issues/new/choose)
 
@@ -141,10 +154,10 @@ Most historical evidence documents are in Chinese. English explanations and sour
 
 ## Status and limits
 
-This is a research project with usable documentation and a hash-check utility. It has no turnkey orchestration runtime or live demo. The freeze's regression start was invalidated; its B07 record contains reply metadata but zero delivered candidate items. Read the [cutoff state](docs/CURRENT_STATE.md) before interpreting status fields.
+This is a research project with an experimental single-worker runtime, local tests, documentation and a hash-check utility. Its live loop is not yet verified; it is not a turnkey multi-worker product. The freeze's regression start was invalidated; its B07 record contains reply metadata but zero delivered candidate items. Read the [cutoff state](docs/CURRENT_STATE.md) before interpreting historical status fields.
 
 Evidence uses **CONFIRMED / REPORTED / INFERENCE / UNKNOWN**. Candidate discovery and parse success do not imply verification. Some originals are local-only because of credentials, privacy or redistribution boundaries; archive hashes identify them, but this public repository cannot replay every historical run.
 
 This community project is not affiliated with or endorsed by the providers of Codex, DOT or Muse. No project license has been selected; do not assume an MIT/Apache reuse grant. [License selection](docs/ROADMAP.md#owner-decisions) is an owner decision.
 
-中文：这是以真实长跑失败为起点的浏览器 AI 协调研究项目。先读失败案例与调度原则，再从小型文档、示例数据或事件说明贡献开始；当前没有一键运行的 Agent 产品。
+中文：这是以真实长跑失败为起点的浏览器 AI 协调项目。现有单 worker 实验 runtime 和本地测试；真实浏览器通信尚未验证，没有一键运行的多 Agent 产品。

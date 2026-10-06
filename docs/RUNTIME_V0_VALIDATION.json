@@ -1,0 +1,33 @@
+{
+  "run_id": "GITHUB-RUNTIME-SPRINT-20261006",
+  "baseline": "e993e45ccd56fec384d97b74965645f6d15d6137",
+  "status": "LOCAL_VERIFICATION_PASS_LIVE_UNVERIFIED",
+  "local_integration_tests": 13,
+  "delivery_fixture_cases": 7,
+  "tab_matching_checks": 3,
+  "live_smoke": {
+    "status": "CONTROL_DOWN",
+    "filled": false,
+    "submitted": false,
+    "reply_received": false,
+    "result_saved_locally": true
+  },
+  "relative_links_checked": 66,
+  "checks": [
+    "Actual CLI and copied MCP transport exercised via JSON and SSE fake server",
+    "B06 composer regression and old reply correlation",
+    "Single-send uncertainty and run-ID reservation protection",
+    "JSON Schema: synthetic success and actual control failure; rejects false success",
+    "Changed/new public file secret/privateURL/absolute dependency scan",
+    "Runs and sessions excluded by Git ignore",
+    "Original evidence preserved except allowed current docs and manifest",
+    "git diff --check",
+    "Original freeze tag object unchanged"
+  ],
+  "limits": [
+    "Live browser tab discovery timed out; no live send attempted by runtime",
+    "Provider selectors not live-validated",
+    "No multiworker refill or attachment capture",
+    "Historical gap audits and specs remain dated baselines"
+  ]
+}

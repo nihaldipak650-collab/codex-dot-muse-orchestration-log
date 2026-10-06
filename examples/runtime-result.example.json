@@ -1,0 +1,27 @@
+{
+  "schema_version": "1.0",
+  "run_id": "SYNTHETIC-EXAMPLE",
+  "started_at": "2026-01-01T00:00:00Z",
+  "finished_at": "2026-01-01T00:00:03Z",
+  "worker_identifier_safe": {
+    "hostname": "worker.example",
+    "url_sha256": "272cd9c31970659be4929a2fcf3ea9df227c39ccdcfc11a96c248dee6fc7db6a"
+  },
+  "endpoint": "http://localhost:8931",
+  "preflight_status": "CONTROL_READY",
+  "tab_status": "TAB_EXISTING",
+  "message_sha256": "ba8d234d46e9950736dad6681ba36428d0cf93aeccb173bb1a7bb8f61bb25ca0",
+  "filled": true,
+  "submitted": true,
+  "visible_as_user_message": true,
+  "submit_confirmed": true,
+  "reply_received": true,
+  "reply_text": "ACK SYNTHETIC-EXAMPLE",
+  "timestamps": {
+    "submit_attempt": "2026-01-01T00:00:01Z",
+    "submit_confirmed": "2026-01-01T00:00:02Z",
+    "reply_received": "2026-01-01T00:00:03Z"
+  },
+  "errors": [],
+  "final_status": "SUCCESS"
+}

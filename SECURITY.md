@@ -1,6 +1,6 @@
 # Security and sensitive information
 
-This repository currently contains public research documents, sanitized examples and a local hash utility. It does not operate a hosted orchestration service. Third-party browser tools and workers have their own security policies.
+This repository contains public research documents, sanitized examples, a hash utility and an experimental single-worker browser communication runtime. It does not operate a hosted orchestration service. Runtime results and session material are local-only and ignored; replies may contain private content. Third-party browser tools and workers have their own security policies.
 
 Never include tokens, passwords, cookies, authentication headers, browser profiles, account screenshots, private prompts or original private archives in an issue, PR or attachment. A hash is not permission to publish the corresponding source.
 

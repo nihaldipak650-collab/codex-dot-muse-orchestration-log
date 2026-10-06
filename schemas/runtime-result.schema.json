@@ -1,0 +1,28 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Single worker runtime result v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "run_id", "started_at", "finished_at", "worker_identifier_safe", "endpoint", "preflight_status", "tab_status", "message_sha256", "filled", "submitted", "visible_as_user_message", "submit_confirmed", "reply_received", "reply_text", "timestamps", "errors", "final_status"],
+  "properties": {
+    "schema_version": {"const": "1.0"},
+    "run_id": {"type": "string", "pattern": "^[A-Za-z0-9_-]{1,100}$"},
+    "started_at": {"type": "string", "format": "date-time"},
+    "finished_at": {"type": "string", "format": "date-time"},
+    "worker_identifier_safe": {"oneOf": [{"type": "null"}, {"type": "object", "additionalProperties": false, "required": ["hostname", "url_sha256"], "properties": {"hostname": {"type": "string"}, "url_sha256": {"type": "string", "pattern": "^[a-f0-9]{64}$"}}}]},
+    "endpoint": {"type": ["string", "null"]},
+    "preflight_status": {"enum": ["CONTROL_READY", "CONTROL_DOWN"]},
+    "tab_status": {"enum": ["TAB_EXISTING", "TAB_OPENED", "TAB_NOT_FOUND"]},
+    "message_sha256": {"type": ["string", "null"], "pattern": "^[a-f0-9]{64}$"},
+    "filled": {"type": "boolean"},
+    "submitted": {"type": "boolean"},
+    "visible_as_user_message": {"type": "boolean"},
+    "submit_confirmed": {"type": "boolean"},
+    "reply_received": {"type": "boolean"},
+    "reply_text": {"type": ["string", "null"]},
+    "timestamps": {"type": "object", "additionalProperties": {"type": "string", "format": "date-time"}},
+    "errors": {"type": "array", "items": {"type": "object", "additionalProperties": false, "required": ["code", "stage"], "properties": {"code": {"type": "string"}, "stage": {"type": "string"}}}},
+    "final_status": {"enum": ["SUCCESS", "CONTROL_DOWN", "TAB_NOT_FOUND", "TAB_AMBIGUOUS", "DELIVERY_UNKNOWN", "REPLY_TIMEOUT", "HUMAN_APPROVAL_REQUIRED", "INVALID_CONFIG", "INSPECT_READY"]}
+  },
+  "allOf": [{"if": {"properties": {"final_status": {"const": "SUCCESS"}}}, "then": {"properties": {"preflight_status": {"const": "CONTROL_READY"}, "tab_status": {"enum": ["TAB_EXISTING", "TAB_OPENED"]}, "filled": {"const": true}, "submitted": {"const": true}, "visible_as_user_message": {"const": true}, "submit_confirmed": {"const": true}, "reply_received": {"const": true}, "reply_text": {"type": "string", "minLength": 1}}}}]
+}
