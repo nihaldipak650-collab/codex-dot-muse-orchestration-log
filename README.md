@@ -2,7 +2,7 @@
 
 **Failure-driven orchestration for browser AI workers.**
 
-How do you keep multiple web AI workers moving when replies are slow, delivery is uncertain, and the coordinator wants to stop? This project develops **progress-first working rules** from recorded Codex → DOT/Muse runs: what happened, how it failed, and what to measure next.
+Codex uses **Playwright / Playwright MCP to operate existing DOT and Muse conversations in a real browser**: send prompts, observe replies, save local results, then decide the next task. This project studies how to keep those workers moving when replies are slow, delivery is uncertain, and the coordinator wants to stop.
 
 [![Status: research](https://img.shields.io/badge/status-research-blue)](#status-and-limits)
 [![Evidence: documented](https://img.shields.io/badge/evidence-documented-teal)](#what-we-actually-ran)
@@ -12,22 +12,44 @@ How do you keep multiple web AI workers moving when replies are slow, delivery i
 
 [Explore in two minutes](#quick-start-explore-the-project) · [Read the failures](docs/FAILURE_MODES.md) · [Pick a first contribution](CONTRIBUTING.md#first-contributions)
 
-Current deliverables: experiment reports, failure cases, coordinator playbooks and example contracts. A reusable agent runtime is still roadmap work.
+Current deliverables: experiment reports, failure cases, coordinator playbooks and example contracts. **This clone has no reusable worker-communication runtime.** The [gap audit](PROJECT_GAP_AUDIT.md) and [single-worker V0 specification](MINIMAL_RUNTIME_V0_SPEC.md) identify what to build next.
+
+## How it works
 
 ```mermaid
 flowchart TD
   H["Human: goal, permissions, stop condition"] --> C["Codex coordinator"]
-  C --> D["DOT lane"]
-  C --> M["Muse lane"]
+  C --> P["Playwright / Playwright MCP: browser control"]
+  P --> B["Browser: existing worker conversations"]
+  B --> D["DOT web worker"]
+  B --> M["Muse web worker"]
   D --> A["Artifacts and results"]
   M --> A
-  A --> E["Local evidence and state"]
+  A --> E["Local artifacts / state"]
   E --> V["Verify, synthesize, decide next step"]
   V -->|"Refill within scope and budget"| C
   C -.-> W["While a worker is pending: independent local work"]
 ```
 
-*Conceptual workflow, not a product screenshot. Each lane progresses independently.*
+*Diagram of the recorded operating pattern, not a shipped runtime. The public record does not pin an extension or remote-transport topology.*
+
+1. Human sets the goal, permissions and stop condition; Codex selects the next task.
+2. Browser control locates a worker tab, fills the normal conversation composer and submits the prompt. Filling alone does not prove submission.
+3. Codex observes the conversation's submitted message and worker reply through browser tools, then captures text/artifacts locally.
+4. Codex triages results, updates state/ledgers and decides whether to refill an available lane, work locally or stop. The progress-first playbook improves this process; it is not an implemented scheduler here.
+
+| Responsibility | What performs it |
+|---|---|
+| Browser control | Playwright/MCP tools interact with tabs and page elements. |
+| Coordinator logic | Codex chooses tasks, interprets delivery/results and decides next steps. |
+| Worker intelligence | Existing DOT/Muse web AI applications produce replies. |
+| Local state/artifacts | Saved results, event records and ledgers support comparison and recovery. |
+
+The [architecture record](docs/ARCHITECTURE.md) and [B06/B07 tool-action audit](experiments/postrun/AUDIT_POSTRUN_50MIN.md) support this chain. This project does not reimplement the worker applications or a foundation model; the documented path is browser interaction, not a provider-internal API proxy. DOT is the recorded lane name; a DOT-to-ChatGPT identity mapping is not established by these public records.
+
+### Why existing web conversations?
+
+The original resource-research work used existing independent DOT/Muse conversations as worker lanes. That makes browser-visible delivery, waiting, extraction and refill behavior the subject of these experiments. The records do not establish that browser control is cheaper, better or preferable to official APIs. This is a study of that existing workflow, not an API-versus-browser verdict.
 
 ## Why this problem matters
 
@@ -64,6 +86,20 @@ Keep lanes independent. Prefer refill before narrative bookkeeping. During waits
 
 **Filled ≠ sent. Read ≠ running. Delivered ≠ verified.** The [architecture](docs/ARCHITECTURE.md) and [artifact/event contracts](schemas/artifact-contract.md) explain those boundaries.
 
+## Related projects: different layers
+
+Based on the [previous README comparison](BENCHMARK_REPOS.csv) and its [source receipts](docs/PRESENTATION_SOURCE_RECEIPTS.json), not new runtime testing:
+
+| Project | Documented focus | Our current focus |
+|---|---|---|
+| [browse_code](https://github.com/Dedeep007/browse_code) | Browser-chat to local coding bridge using a Python server and extension. | Long-running coordination of existing worker conversations; no equivalent coding bridge shipped. |
+| [chatgpt-browser-agent](https://github.com/abdallhMoukdad/chatgpt-browser-agent) | Browser daemon with CLI/MCP interfaces and an agentic loop for ChatGPT. | Recorded multi-lane delivery, waiting, recovery and refill failures. |
+| [browser-agent](https://github.com/ianmadez/browser-agent) | OpenBrowser-branded CLI/extension bridge for browser-chat coding. | Evidence and playbooks; no extension component established here. |
+| [Playwright MCP](https://github.com/microsoft/playwright-mcp) | Browser-control tools exposed through MCP. | Coordinator behavior above a browser-control layer. |
+| [browser-use](https://github.com/browser-use/browser-use) | Agents that perform browser tasks. | Coordination of existing web AI workers, rather than a general browser-task agent implementation. |
+
+These describe different responsibilities, not a performance ranking. Their listed capabilities are README descriptions, not independently verified runtime results.
+
 ## Quick Start: explore the project
 
 Requires Git; Python 3.9+ is optional for the read-only integrity check. No API key, browser session or worker account is needed to explore the evidence.
@@ -74,7 +110,7 @@ cd codex-dot-muse-orchestration-log
 python tools/verify_public_hashes.py
 ```
 
-The checker verifies published file bytes, not experiment correctness. Then:
+The checker verifies published file bytes, not experiment correctness. **These commands do not connect to Playwright or send a worker prompt.** Then:
 
 1. Read the [B06/B07 audit](experiments/postrun/AUDIT_POSTRUN_50MIN.md) alongside the [playbook](patches/LONG_RUN_PATCH_V2.md).
 2. Inspect the [sanitized event log](examples/sanitized-events.jsonl) and [worker state](examples/sanitized-worker-state.json).
@@ -84,7 +120,7 @@ To inspect the original release snapshot, check out `v0.1-freeze-2026-10-06`. Th
 
 ## Roadmap and contributing
 
-The next engineering priorities are reliable bootstrap, composer-versus-message detection and a progress-first coordinator loop. Event viewing, artifact contracts and a repeatable regression harness follow. These are proposed work, not shipped features.
+The smallest runnable next step is [single-worker V0](MINIMAL_RUNTIME_V0_SPEC.md): connection/preflight, tab adapter, confirmed submission, correlated reply observation, and local capture/status behind one entry command. These five implementation pieces are missing as reusable code; historical interactions and state examples provide partial evidence, not installed functionality. Multi-worker refill follows only after that loop works. The wider priorities remain in the roadmap.
 
 [Roadmap with acceptance criteria](docs/ROADMAP.md) · [Contributor guide](CONTRIBUTING.md) · [Open an issue](https://github.com/nihaldipak650-collab/codex-dot-muse-orchestration-log/issues/new/choose)
 
@@ -98,6 +134,7 @@ Good starting work includes an English failure-case walkthrough, synthetic deliv
 | Failure analysis and operating rules | [Failure modes](docs/FAILURE_MODES.md), [lessons](docs/LESSONS_LEARNED.md), [V2 playbook](patches/LONG_RUN_PATCH_V2.md) |
 | Frozen state and continuation boundaries | [State at the freeze cutoff](docs/CURRENT_STATE.md), [handoff](docs/NEXT_STEPS.md), [historical landing page](docs/FREEZE_README.md) |
 | Presentation research | [Design plan](GITHUB_PRESENTATION_PLAN.md), [16 wheels](WHEELS_RESEARCH.md), [12-repository comparison](BENCHMARK_REPOS.csv) |
+| Actual mechanism and runnable gaps | [Gap audit](PROJECT_GAP_AUDIT.md), [single-worker V0 specification](MINIMAL_RUNTIME_V0_SPEC.md) |
 | Safety and source provenance | [Security policy](SECURITY.md), [redaction report](docs/SECURITY_REDACTION_REPORT.md), [archive index](docs/ARCHIVE_INDEX.csv) |
 
 Most historical evidence documents are in Chinese. English explanations and source-linked translations are welcome.

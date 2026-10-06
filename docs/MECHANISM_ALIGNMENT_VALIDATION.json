@@ -1,0 +1,24 @@
+{
+  "baseline": "c2bbd4640924ca79f541e5607471c7330cd8d53d",
+  "status": "VERIFICATION_PASS",
+  "relative_links_checked": 56,
+  "modified_existing_files": [
+    "PUBLIC_FILE_HASHES.sha256",
+    "README.md"
+  ],
+  "checks": [
+    "Existing baseline files unchanged except README/hash manifest",
+    "Relative links and anchors",
+    "Authored text sensitive-token pattern scan and content review",
+    "GitHub GFM rendering: mechanism section and Mermaid container",
+    "Required architecture components present",
+    "git diff --check",
+    "Freeze tag object unchanged"
+  ],
+  "limits": [
+    "No live runtime implementation or browser test",
+    "Existing benchmark reused without new research",
+    "GFM container verified; no rendered pixel layout assertion",
+    "Historical transport and DOT/ChatGPT identity remain unconfirmed"
+  ]
+}
