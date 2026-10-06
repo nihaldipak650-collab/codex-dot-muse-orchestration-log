@@ -4,10 +4,12 @@ function Get-TextHash([string]$Text) {
     finally { $sha.Dispose() }
 }
 function Get-DeliveryObservation($Baseline,$Observation,[string]$Message,[string]$RunId,[datetimeoffset]$SentAt) {
-    $baselineUsers=@($Baseline.users | ForEach-Object { Get-TextHash ([string]$_) })
-    $baselineReplies=@($Baseline.assistants | ForEach-Object { Get-TextHash ([string]$_) })
+    $baselineUsers=if($Baseline.user_hashes){@($Baseline.user_hashes)}else{@($Baseline.users | ForEach-Object { Get-TextHash ([string]$_) })}
+    $baselineReplies=if($Baseline.assistant_hashes){@($Baseline.assistant_hashes)}else{@($Baseline.assistants | ForEach-Object { Get-TextHash ([string]$_) })}
     $newUsers=@($Observation.users | Where-Object { (Get-TextHash ([string]$_)) -notin $baselineUsers })
-    $submitted=@($newUsers | Where-Object { ([string]$_).Trim() -ceq $Message.Trim() }).Count -eq 1
+    $submitted=@($newUsers | Where-Object {
+        if($Baseline.message_hash){(Get-TextHash (([string]$_).Trim())) -ceq $Baseline.message_hash}else{([string]$_).Trim() -ceq $Message.Trim()}
+    }).Count -eq 1
     $newReplies=@($Observation.assistants | Where-Object {
         (Get-TextHash ([string]$_)) -notin $baselineReplies -and ([string]$_).Contains($RunId)
     })

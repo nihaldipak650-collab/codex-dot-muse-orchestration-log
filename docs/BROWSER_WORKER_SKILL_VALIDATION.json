@@ -1,0 +1,39 @@
+{
+  "run_id": "BROWSER-WORKER-SKILL-V0-20261006",
+  "baseline": "b14ef929298583239cd7424d90e2c2517b38db48",
+  "status": "LOCAL_PASS_LIVE_UNVERIFIED",
+  "engine_tag": "v0.2-runtime-local-pass-2026-10-06",
+  "reference_repos_downloaded": 5,
+  "existing_runtime_integration_tests": 13,
+  "delivery_fixtures": 7,
+  "tab_checks": 3,
+  "skill_integration_tests": 7,
+  "relative_links_checked": 65,
+  "checks": [
+    "Skill frontmatter and bundled skill validator",
+    "Runtime AST parse",
+    "Alias resolution and inspect no-send",
+    "Session persistence and same-thread continuation",
+    "Pending collect resumes original RUN_ID without resend",
+    "DELIVERY_UNKNOWN blocks ask/continue",
+    "MAX_TURNS bound",
+    "Original B06 and runtime regression tests preserved",
+    "New public files scanned for private URLs and credential patterns",
+    "Private aliases/sessions excluded by Git",
+    "Two annotated tag objects and targets preserved",
+    "git diff --check"
+  ],
+  "live_smoke": {
+    "inspect_status": "CONTROL_DOWN",
+    "filled": false,
+    "submitted": false,
+    "reply_received": false,
+    "one_hour_trial_started": false
+  },
+  "limits": [
+    "Live control failure cause unconfirmed; TCP port remains reachable",
+    "Provider selectors and context continuity not live-validated",
+    "Manual bounded collect; no automatic wake/resume service",
+    "Worker DONE is reported, not fact verification"
+  ]
+}

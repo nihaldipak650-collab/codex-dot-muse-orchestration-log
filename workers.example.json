@@ -1,0 +1,7 @@
+{
+  "endpoint": "http://localhost:8931/mcp",
+  "workers": {
+    "dot": {"url": "https://worker.example/conversation/dot", "config": "runtime/worker.local.json"},
+    "muse": {"url": "https://worker.example/conversation/muse", "config": "runtime/worker.local.json"}
+  }
+}

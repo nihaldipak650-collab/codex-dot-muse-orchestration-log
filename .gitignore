@@ -18,3 +18,5 @@ __pycache__/
 runs/*
 !runs/.gitkeep
 runtime/*.local.json
+workers.local.json
+sessions.local/

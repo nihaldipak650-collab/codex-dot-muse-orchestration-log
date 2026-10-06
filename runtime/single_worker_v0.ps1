@@ -6,7 +6,9 @@ param(
     [string]$RunId=('RUNTIME-V0-'+[datetime]::UtcNow.ToString('yyyyMMddTHHmmssfff')),
     [string]$Config,
     [string]$OutputDirectory,
-    [switch]$Inspect
+    [switch]$Inspect,
+    [switch]$Collect,
+    [string]$ContextFile
 )
 $ErrorActionPreference='Stop'
 . (Join-Path $PSScriptRoot 'state.ps1')
@@ -41,8 +43,16 @@ try {
     if($ep.UserInfo -or $ep.Query -or $ep.Fragment) { throw 'INVALID_ENDPOINT: credentials/query/fragment not supported.' }
     $result.worker_identifier_safe=@{hostname=$worker.Host;url_sha256=(Get-TextHash $WorkerUrl)}
     $result.endpoint=$ep.GetLeftPart([UriPartial]::Authority) # Do not persist path/query connection material.
-    if(-not $Inspect -and (-not $Message -or -not $Message.Contains($RunId))) { throw 'MESSAGE_REQUIRES_RUN_ID' }
+    $correlationRunId=$RunId
+    if($Collect) {
+        if(-not $ContextFile){throw 'INVALID_COLLECT_CONTEXT'}
+        $context=Get-Content -LiteralPath $ContextFile -Raw | ConvertFrom-Json
+        if($context.worker_url_hash -cne (Get-TextHash $WorkerUrl) -or -not $context.sent_at){throw 'INVALID_COLLECT_BINDING'}
+        $correlationRunId=[string]$context.run_id
+    }
+    if(-not $Inspect -and -not $Collect -and (-not $Message -or -not $Message.Contains($RunId))) { throw 'MESSAGE_REQUIRES_RUN_ID' }
     $result.message_sha256=Get-TextHash $Message
+    if($Collect){$result.message_sha256=[string]$context.message_hash}
     $stage='CONTROL_DOWN'
     function Invoke-Mcp([string]$Method,$Params,[int]$Limit=10) {
         $req=Join-Path $scratch 'request.json'
@@ -76,6 +86,7 @@ try {
     $stage='TAB_NOT_FOUND'
     $index=Get-ExactTabIndex $tabs $WorkerUrl
     if($index -lt 0) {
+        if($Collect -or $Inspect){throw 'TAB_NOT_FOUND'}
         if($tabSupportsUrl) { $null=Invoke-Tool 'browser_tabs' @{action='new';url=$WorkerUrl} }
         else {
             $null=Invoke-Tool 'browser_tabs' @{action='new'}
@@ -99,6 +110,16 @@ try {
     $result.timestamps.baseline=[string]$baseline.observed_at
     if($Inspect) { $result.final_status='INSPECT_READY';$exitCode=0;return }
     $stage='DELIVERY_UNKNOWN'
+    if($Collect) {
+        $baseline=$context
+        $sent=[datetimeoffset]$context.sent_at
+        $result.filled=[bool]$context.filled
+        $result.submitted=[bool]$context.submitted
+    } else {
+    if(-not $ContextFile){$ContextFile=Join-Path $OutputDirectory ($RunId+'.context.json')}
+    $context=[ordered]@{run_id=$RunId;worker_url_hash=(Get-TextHash $WorkerUrl);message_hash=(Get-TextHash $Message.Trim());user_hashes=@($baseline.users | ForEach-Object {Get-TextHash ([string]$_)});assistant_hashes=@($baseline.assistants | ForEach-Object {Get-TextHash ([string]$_)});sent_at=$null;filled=$false;submitted=$false}
+    function Save-Context { [IO.File]::WriteAllText($ContextFile,($context | ConvertTo-Json -Depth 10),[Text.UTF8Encoding]::new($false)) }
+    Save-Context
     # Fill is distinct from submit. No transport recovery/replay on either operation.
     if($useRef) {
         $snapshot=Invoke-Tool 'browser_snapshot' @{}
@@ -109,24 +130,29 @@ try {
         $null=Invoke-Tool 'browser_type' @{target=[string]$cfg.composer;text=$Message;submit=$false}
     }
     $result.filled=$true;$result.timestamps.filled=[datetimeoffset]::UtcNow.ToString('o')
+    $context.filled=$true
     $sent=[datetimeoffset]::UtcNow;$result.timestamps.submit_attempt=$sent.ToString('o')
+    $context.sent_at=$sent.ToString('o');Save-Context
     $null=Invoke-Tool 'browser_press_key' @{key='Enter'}
     $result.submitted=$true
+    $context.submitted=$true;Save-Context
+    }
     $deadline=[datetimeoffset]::UtcNow.AddSeconds($Timeout)
     $submitDeadline=[datetimeoffset]::UtcNow.AddSeconds([Math]::Min(20,$Timeout))
     $seenText='';$stable=0
     while([datetimeoffset]::UtcNow -lt $deadline) {
         $remaining=[Math]::Max(1,[int]($deadline-[datetimeoffset]::UtcNow).TotalSeconds)
         $observation=Observe $remaining
-        $delivery=Get-DeliveryObservation $baseline $observation $Message $RunId $sent
+        $delivery=Get-DeliveryObservation $baseline $observation $Message $correlationRunId $sent
         if($delivery.submitted) {
             if(-not $result.submit_confirmed) {$result.timestamps.submit_confirmed=[string]$observation.observed_at}
-            $result.visible_as_user_message=$true;$result.submit_confirmed=$true;$stage='REPLY_TIMEOUT'
+            # A later actual user-message receipt can reconcile an uncertain Enter return.
+            $result.submitted=$true;$result.visible_as_user_message=$true;$result.submit_confirmed=$true;$stage='REPLY_TIMEOUT'
         }
         if($delivery.reply) {
             if($delivery.reply -ceq $seenText) { $stable++ } else { $stable=0;$seenText=$delivery.reply }
             # Exact ACK is self-delimiting; other replies require configured completion signal.
-            $exactAck=$delivery.reply.Trim() -ceq ('ACK '+$RunId)
+            $exactAck=$delivery.reply.Trim() -ceq ('ACK '+$correlationRunId)
             if($delivery.complete -and ($exactAck -or $observation.completion) -and $stable -ge 1) {
                 $result.reply_text=Protect-ReplyText $delivery.reply $WorkerUrl;$result.reply_received=$true
                 $result.timestamps.reply_received=[string]$observation.observed_at

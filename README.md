@@ -1,6 +1,8 @@
-# Codex · DOT · Muse
+# Browser Worker Skill · Codex / DOT / Muse
 
-**Failure-driven orchestration for browser AI workers.**
+**Short runs. Persistent workers. Long-running goals.**
+
+A Codex skill for calling existing web AI conversations repeatedly while retaining truthful delivery/session state. Codex plans and verifies; the skill communicates. The live loop remains experimental and unverified.
 
 Codex uses **Playwright / Playwright MCP to operate existing DOT and Muse conversations in a real browser**: send prompts, observe replies, save local results, then decide the next task. This project studies how to keep those workers moving when replies are slow, delivery is uncertain, and the coordinator wants to stop.
 
@@ -12,14 +14,16 @@ Codex uses **Playwright / Playwright MCP to operate existing DOT and Muse conver
 
 [Explore in two minutes](#quick-start-explore-the-project) · [Read the failures](docs/FAILURE_MODES.md) · [Pick a first contribution](CONTRIBUTING.md#first-contributions)
 
-Current deliverables include experiment reports, coordinator playbooks and an **experimental single-worker communication runtime** with local integration tests. **LIVE_SMOKE_NOT_YET_VERIFIED:** the live endpoint initialized, but tab discovery timed out. Start with [Minimal Runtime](#minimal-runtime); the [earlier gap audit](PROJECT_GAP_AUDIT.md) records the pre-runtime baseline.
+Current deliverables include a [Browser Worker Skill](skills/browser-worker/SKILL.md), local alias/session persistence, an experimental single-worker runtime and failure evidence. **LIVE_SMOKE_NOT_YET_VERIFIED:** previous live tab discovery timed out. Start with [the Skill](#browser-worker-skill) or [Minimal Runtime](#minimal-runtime); the [earlier gap audit](PROJECT_GAP_AUDIT.md) records the pre-runtime baseline.
 
 ## How it works
 
 ```mermaid
 flowchart TD
   H["Human: goal, permissions, stop condition"] --> C["Codex coordinator"]
-  C --> P["Playwright / Playwright MCP: browser control"]
+  C --> S["Browser Worker Skill: inspect / ask / continue / collect"]
+  S --> T["Truthful local session / runtime"]
+  T --> P["Playwright / Playwright MCP: browser control"]
   P --> B["Browser: existing worker conversations"]
   B --> D["DOT web worker"]
   B --> M["Muse web worker"]
@@ -99,6 +103,21 @@ Based on the [previous README comparison](BENCHMARK_REPOS.csv) and its [source r
 | [browser-use](https://github.com/browser-use/browser-use) | Agents that perform browser tasks. | Coordination of existing web AI workers, rather than a general browser-task agent implementation. |
 
 These describe different responsibilities, not a performance ranking. Their listed capabilities are README descriptions, not independently verified runtime results.
+
+## Browser Worker Skill
+
+Call a local alias rather than exposing private thread URLs to the coordinator interface:
+
+```sh
+python skills/browser-worker/scripts/worker.py inspect --worker dot
+python skills/browser-worker/scripts/worker.py ask --worker dot --message "Reply exactly: ACK {RUN_ID}"
+python skills/browser-worker/scripts/worker.py continue --worker dot --message "Revise the first section using the verified feedback."
+python skills/browser-worker/scripts/worker.py collect --worker dot
+```
+
+Configure ignored `workers.local.json` from [the placeholder example](workers.example.json). [SKILL.md](skills/browser-worker/SKILL.md) describes setup, state and recovery. The wrapper reuses the runtime, binds continuation to the same thread hash and defaults to six sending attempts. Pending/unknown delivery blocks new sends; collect only observes the original turn. Codex supplies actual feedback and decides whether CONTINUE, NEED_CONTEXT, BLOCKED or DONE is appropriate; natural replies remain supported. There is no automatic coordinator, wake service or worker-requested command execution.
+
+Run `python tests/test_worker_skill.py` for alias, persistence, same-thread, collect/no-resend and MAX_TURNS checks. The [one-hour trial](ONE_HOUR_SINGLE_WORKER_TRIAL.md) is prepared but gated on a successful live ACK smoke. See [reference mechanisms](docs/BROWSER_WORKER_REFERENCES.md); no external repositories are vendored.
 
 ## Minimal Runtime
 

@@ -70,6 +70,8 @@ Tests cover B06 composer-only false delivery, old replies, pre-send observations
 
 ## Known limitations
 
+The [Browser Worker Skill](../skills/browser-worker/SKILL.md) wraps this runtime. New `-Collect -ContextFile <local-context>` mode observes an earlier run without filling, submitting or opening a missing tab. Send context stores only hashes, binding, original RUN_ID and timestamp in ignored local storage. Collection gets a new result filename but correlates against the original turn; the same baseline/delivery logic is reused. Inspect also leaves missing tabs unopened.
+
 Live loop remains unverified. Exact tab matching is intentionally strict; redirects/URL changes need adapter work. Message-text hashes are baseline identities, so identical repeated content is conservatively rejected. Generic role selectors and generation/completion selectors must be validated against the actual provider UI. The reply deadline starts after submission; individual MCP requests have bounded timeouts and preflight has separate transport limits. Shared-tab concurrent navigation can invalidate observations; the runtime checks URL before every observation. Disk failures cannot guarantee a result file and cause nonzero exit. No automatic resend, file-attachment capture, context truncation recovery or multi-worker scheduling is implemented.
 
 The reused SSE reader consumes one data event. Servers emitting progress notifications before the response currently cause a conservative unconfirmed outcome; notifications are never accepted as action receipts.
