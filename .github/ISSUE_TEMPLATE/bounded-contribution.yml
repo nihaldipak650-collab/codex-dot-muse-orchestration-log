@@ -1,0 +1,23 @@
+name: Bounded contribution
+description: Propose a small documentation, explanation or synthetic fixture task.
+body:
+  - type: input
+    id: task
+    attributes:
+      label: Task or contribution-guide brief
+    validations:
+      required: true
+  - type: textarea
+    id: output
+    attributes:
+      label: Output paths and acceptance criteria
+      description: State a reviewable artifact and how to check it.
+    validations:
+      required: true
+  - type: textarea
+    id: scope
+    attributes:
+      label: Time estimate, public sources and scope boundaries
+      description: First tasks should need no live worker account or private data.
+    validations:
+      required: true

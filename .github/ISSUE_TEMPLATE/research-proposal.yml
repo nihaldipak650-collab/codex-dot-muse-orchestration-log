@@ -1,0 +1,23 @@
+name: Research or runtime proposal
+description: Agree on a testable question and boundaries before substantial work.
+body:
+  - type: textarea
+    id: question
+    attributes:
+      label: Question and relevant recorded failure
+    validations:
+      required: true
+  - type: textarea
+    id: measurement
+    attributes:
+      label: Proposed measurements and success criteria
+      description: Avoid unmeasured speedup or autonomous-operation claims.
+    validations:
+      required: true
+  - type: textarea
+    id: boundaries
+    attributes:
+      label: Permissions, side effects, budget and stop conditions
+      description: A proposal is not authorization to run workers or publish private data.
+    validations:
+      required: true

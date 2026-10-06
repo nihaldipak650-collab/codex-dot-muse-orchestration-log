@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Sensitive information and security reporting
+    url: https://github.com/nihaldipak650-collab/codex-dot-muse-orchestration-log/blob/main/SECURITY.md
+    about: Read the reporting policy before sharing anything sensitive.
+  - name: First contribution briefs
+    url: https://github.com/nihaldipak650-collab/codex-dot-muse-orchestration-log/blob/main/CONTRIBUTING.md
+    about: Pick a bounded documentation or fixture contribution.

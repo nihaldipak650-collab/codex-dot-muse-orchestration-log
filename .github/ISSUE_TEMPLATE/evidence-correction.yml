@@ -1,0 +1,25 @@
+name: Evidence correction
+description: Correct a public claim, timestamp, count or source link.
+body:
+  - type: markdown
+    attributes:
+      value: Use public source links only. Never paste secrets or private transcripts.
+  - type: input
+    id: location
+    attributes:
+      label: Public file and section
+    validations:
+      required: true
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Claim, correction and public supporting evidence
+      description: Separate observations, reported claims and unknowns.
+    validations:
+      required: true
+  - type: textarea
+    id: impact
+    attributes:
+      label: Affected interpretation and suggested follow-up
+    validations:
+      required: true

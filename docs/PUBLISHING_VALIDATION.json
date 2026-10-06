@@ -1,0 +1,31 @@
+{
+  "status": "VERIFICATION_PASS",
+  "scope": "Presentation edits and new contributor files; not a fresh historical experiment audit.",
+  "benchmark_repos": 12,
+  "wheels": 16,
+  "local_links_checked": 58,
+  "issue_forms": 3,
+  "historical_files_preserved": 38,
+  "only_modified_existing_files": [
+    "PUBLIC_FILE_HASHES.sha256",
+    "README.md"
+  ],
+  "checks": [
+    "YAML parse and required form structure",
+    "CSV columns and 12 rows",
+    "relative links and heading anchors",
+    "hash integrity",
+    "tamper and traversal negative cases",
+    "credential-pattern scan plus authored-content review",
+    "git diff --check",
+    "annotated freeze tag and peeled commit unchanged",
+    "GitHub GFM API: title, three tables and Mermaid rendering container"
+  ],
+  "limits": [
+    "No new agent or browser run",
+    "No rendered-viewport 20-second user study",
+    "Social preview specification only",
+    "Hash checking is not semantic or privacy proof",
+    "Mermaid rendering container verified; no pixel screenshot or browser-side layout assertion"
+  ]
+}
