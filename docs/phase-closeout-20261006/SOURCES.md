@@ -2,6 +2,8 @@
 
 核对日期2026-10-06；技术源码固定到 `f8dcb4bb3c348fd0f95d5af2a594fc3626635b0a`。公开摘要不附私人路径、线程、账号、原始聊天或完整研究台账。哈希用于定位原件字节，不等于授权分发或事实正确。
 
+本页保留上一轮阶段审计的原件/hash 与访问记录；本轮最终文档对齐不重复外部研究、打开原包或启动 live。R13 的 86 项是技术基线清单口径，当前 main 的公开文件清单以根 PUBLIC_FILE_HASHES.sha256 为准。旧 ZIP 格式证据不代表已执行 V3 兼容验收；当前状态与唯一重启入口见 [START_HERE](START_HERE.md)。
+
 ## 本地/公开项目证据
 
 - **R01** `ORCHESTRATOR_POSTMORTEM_20261005.md`，200行历史postmortem；当前字节核对，内容在本项目上下文中已读取。SHA `e8c8b632473f7ffe441f8ebee0f565a0cfe23fa0d9c80c776db62fd613d5b588`。公开对应入口：[Wheels复盘](../../experiments/project-wheels/ORCHESTRATOR_POSTMORTEM_20261005.md)。

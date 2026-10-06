@@ -1,5 +1,7 @@
 # One-hour single-worker trial
 
+**HISTORICAL TEST DESIGN / DIAGNOSTIC ASSET — superseded as the next validation target.** This file is retained, not deleted. The ACK prerequisite and timed windows below describe the earlier plan, not current restart instructions. The phase is frozen; do not automatically run ACK → one hour. Read [START_HERE](docs/phase-closeout-20261006/START_HERE.md). Only explicit user restart permits a short, bounded real journey covering both workers, actual artifact/inline receipt and local read, Codex interpretation, same-thread revision and final delivery; measure user interventions/clicks/copy-paste/rescues and continuity rather than elapsed duration.
+
 Prepared, not executed. Use only `dot` and an authorized existing conversation. Prerequisite: inspect then an exact ACK smoke must confirm submission, correlated reply and saved result. If control is unavailable or approval required, stop live actions; do not count the hour as a successful run.
 
 Configure `workers.local.json`, selectors and ignored state locally. Set a finite budget, e.g. `--max-turns 6`. Record action times from local result files and a small local trial ledger; no private URLs or transcripts in public summaries.

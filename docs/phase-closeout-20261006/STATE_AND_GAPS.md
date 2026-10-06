@@ -2,6 +2,8 @@
 
 核对对象：技术提交 `f8dcb4bb3c348fd0f95d5af2a594fc3626635b0a`。本文件是静态源码、历史产物与事件对照；不是新的运行试验，也不自动要求实现下列条目。来源编号见 [SOURCES](SOURCES.md)。
 
+当前阶段已冻结，操作入口为 [START_HERE](START_HERE.md)。只有用户明确重启才验证短、有界的真实用户旅程；旧 ACK smoke / ONE_HOUR_SINGLE_WORKER_TRIAL 保留为历史 diagnostic，不构成自动启动计划。
+
 ## 证据状态
 
 | 项目 | 已有依据 | 边界 |
@@ -31,7 +33,7 @@
 
 ### 1. 使用入口与真实默认值不一致
 
-[wrapper](../../skills/browser-worker/scripts/worker.py) 的 `--transport` 默认是 standalone；缺参数的旧示例会走该路径。registered 模式不是 Python 自动调宿主工具：ask 返回 PREPARED，Codex 仍需执行实际浏览器动作、保存观察并 collect。文档可以明确说明，不应把它宣传为已安装的原子 MCP 工具。
+[wrapper](../../skills/browser-worker/scripts/worker.py) 的 `--transport` 默认仍是 standalone；技术基线未改动。文档现已把推荐 registered 与显式 standalone 示例分开。registered 模式不是 Python 自动调宿主工具：Skill 准备 RUN_ID、状态与收件逻辑，ask 返回 PREPARED，Codex 用已注册 Playwright 执行浏览器动作、保存观察并 collect。standalone 用于 diagnostic、local test 或明确选择的 standalone usage，不是推荐 live 默认路径。
 
 源码位于 `skills/browser-worker/`，wrapper 的 ROOT 依赖整仓库布局。仅复制 Skill 子目录不能据此认为运行依赖齐全。项目级 `.agents/skills/browser-worker` 未在此次 checkout 中看到；用户/系统范围是否已安装未核验。
 
@@ -49,6 +51,8 @@
 
 这说明需要明确兼容/转换策略；并非已执行过旧包失败测试，也不代表旧包坏了。新格式可校验，不等于历史格式已继承。诚实的零结果、raw部分恢复与内容验证也应有不同含义；源码中 NO_RESULT_ROWS 不应被业务上自动解释成任务失败。
 
+DOT 与 Muse 都真实成功交付过 ZIP；CSV/MD/inline 也有历史记录。两者都可按现场能力交付 structured inline result 或一个主要 artifact/bundle。inline 是可靠 fallback，不是 Muse 的永久唯一模式。本地 V3 新合同测试通过，不能表述为全部历史 ZIP 已兼容。
+
 ### 5. 先续发，再取旧包的接缝仍在
 
 [workflow.py](../../runtime/workflow.py) 的 ingest 接受指定 run，而 discover 依赖状态的 last_run_id。发新任务后如何继续发现旧回复附件，需要验证明确的旧run绑定。两个 alias 的局部锁也不自动保证共享当前标签页操作隔离；默认 plan 输出路径可能被后续生成覆盖。这些是静态风险，不是本轮已复现的并发故障。
@@ -65,4 +69,4 @@ collect 是再读取，不是唤醒已退出 Codex。context capsule 是协调�
 
 ## 本阶段停止条件
 
-本次只把事实、来源和交接补齐，不修上述运行代码，不创建新的版本标签，不开始新实验。下一次只围绕一条真实用户旅程确认：任务发出、交付到手、本地能读、同线程定向修改、人工介入可解释。测试过程不必复制本文件的章节顺序。
+本次只把事实、来源和交接补齐，不修上述运行代码，不创建新的 release/tag，不开始新实验。最后文档 push 后正式冻结。只有用户明确重启，下一次才围绕真实用户旅程确认：任务发出、真实回复、artifact/inline 到手、本地能读、Codex 理解、同线程定向修改、最终交付。记录 human interventions、manual clicks、copy/paste、rescue events、实际收到/读取工件、context continuity，以及相比旧 Playwright 手工协调的用户操作差异。不以 ACK 或跑满一小时作为全流程验收。

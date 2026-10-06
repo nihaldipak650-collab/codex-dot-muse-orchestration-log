@@ -1,6 +1,10 @@
 # V3 full workflow
 
+**Operational reference, not a current run instruction.** The phase is frozen; first read [START_HERE](../../../docs/phase-closeout-20261006/START_HERE.md). Only explicit user restart permits a short, bounded task → DOT/Muse → reply → artifact/inline → actual local read → Codex interpretation → same-thread revision → final delivery. Measure interventions, manual clicks, copy/paste, rescues, artifact receipt/read and continuity versus old manual Playwright coordination. ACK/one-hour plans are historical diagnostics.
+
 Registered browser tools remain owned by Codex. Python does not pretend it can call tools registered in the agent. The common state engine reserves sends and verifies subsequent page observations; artifact ingestion works with either transport.
+
+Browser Worker prepares RUN_ID, state and receipt logic. Codex invokes its already-registered Playwright tools and returns actual observations; this is not an atomic MCP tool automatically called by a Python wrapper. standalone remains diagnostic, local-test or explicit standalone usage. Choose transport explicitly: the unchanged CLI default is standalone.
 
 ## Observe, reserve, send, reconcile
 
@@ -28,7 +32,7 @@ On timeout, preserve pending; perform independent work and later collect. One re
 
 ## Discover and download
 
-Ask DOT for one primary ZIP plus short structured reply; Muse must retain structured inline JSON fallback. Discover only attachment locators scoped to the correlated reply:
+Either worker may deliver structured inline results or one primary artifact/bundle according to actual provider capability and page state. DOT and Muse both historically delivered ZIPs; CSV/MD and inline also occurred. Inline is a reliable fallback for either, not Muse's permanent-only mode. The implementation's BUNDLE_FIRST/INLINE_FALLBACK preference labels are not provider capability limits. Discover only attachment locators scoped to the correlated reply:
 
 ```sh
 python runtime/workflow.py discover --worker dot --observation sessions.local/observation.json
@@ -46,7 +50,9 @@ python runtime/workflow.py ingest --worker dot --run-id <id> --source <actual lo
 
 ZIP contract: root manifest.json with run_id and files mapping every non-manifest archive-relative path to SHA-256; results.json or results.csv; summary.md. Ingest preserves original bytes, safely unpacks within private state, reads/parses, verifies binding/hashes, saves rows and receipt, and updates the shared bundle/row dedupe index only for validated results. Reject traversal/symlink/duplicate-name/size violations. Partial recovery preserves complete rows without accepting them into the validated index.
 
-For Muse fallback, copy the preserved reply.raw.txt **bytes** to a local .json and ingest with --inline. Do not reserialize JSON or translate LF/CRLF; exact correlated reply hash, matching run_id and nonempty real rows are required. No downloadable file is claimed. For malformed replies use reply.raw.txt and reply.parsed.json for correction. VALIDATED is package integrity, not proof of factual correctness.
+This new V3 contract is verified by local tests. Benchmark B retains four original ZIPs with hashes, including Muse's bundle; their list/members/nested manifests and BENCHB IDs differ. No blanket historical compatibility is established or tested in this closeout. See [source evidence](../../../docs/phase-closeout-20261006/SOURCES.md).
+
+For inline fallback from either worker, copy the preserved reply.raw.txt **bytes** to a local .json and ingest with --inline. Do not reserialize JSON or translate LF/CRLF; exact correlated reply hash, matching run_id and nonempty real rows are required. No downloadable file is claimed. For malformed replies use reply.raw.txt and reply.parsed.json for correction. VALIDATED is package integrity, not proof of factual correctness.
 
 Artifact stages are separate: worker declarations are DECLARED; observed correlated targets VISIBLE; copied local bytes DOWNLOADED; read/parsed files READ; nonempty results plus run binding/file integrity VALIDATED. Communication SUCCESS does not imply any artifact stage. Unsupported or malformed bytes remain preserved. Exact bundle hash and canonical whole-row JSON equality dedupe across workers; semantic/entity dedupe belongs to Codex.
 

@@ -1,6 +1,10 @@
 # Roadmap
 
-These are proposed work areas, not implemented features or promised dates. Current deliverables are evidence reports, examples and playbooks. No new runtime experiment was performed for the publishing redesign.
+**Phase frozen; this backlog is not an execution queue.** Current entrypoint: [START_HERE](phase-closeout-20261006/START_HERE.md). Browser Worker 3.0.0 at f8dcb4b has local implementation and recorded passing tests; V3 provider-live full workflow remains NOT_RUN. The proposal tables below originated before that implementation and remain historical planning assets, not claims that those capabilities are all absent.
+
+Only explicit user restart permits the next short, bounded real user journey: task → DOT/Muse → reply → artifact or inline → actual local read → Codex interpretation → same-thread revision → final delivery. Prefer registered Playwright executed by Codex; standalone remains diagnostic/local-test/explicit usage. Both workers historically delivered ZIPs; inline is fallback for either, not Muse-only delivery. Historical ZIP formats are not proven compatible with the V3 contract.
+
+Measure human interventions, manual clicks, copy/paste, rescue events, actual artifact receipt/read and context continuity against old manual Playwright coordination. No automatic ACK → one-hour sequence, V4 development, new release/tag or framework installation follows from this roadmap. No new runtime experiment was performed for this closeout.
 
 ## P0: reliable coordination
 

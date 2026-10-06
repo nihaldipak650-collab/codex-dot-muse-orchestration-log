@@ -1,5 +1,7 @@
 # Single-worker communication runtime
 
+**Standalone diagnostic/local-test/explicit-usage reference.** Phase frozen: read [START_HERE](../docs/phase-closeout-20261006/START_HERE.md) before operation. Commands below, including ACK, do not authorize live trials and are not the recommended registered startup sequence. Registered means Codex invokes its own registered tools; Python prepares/reconciles state rather than automatically calling an atomic MCP tool. Only explicit user restart permits the next bounded real user journey.
+
 For V3 live operation, prefer [Full Workflow Browser Worker](../skills/browser-worker/references/full-workflow.md): registered Playwright tools plus `workflow.py`/`browser_plan.py`. This HTTP runtime remains the standalone diagnostic transport. V3 accepts complete RUN_ID-bound structured replies in addition to ACK/UI completion, preserves correlated partial text on timeout, and shares the local artifact ingestion path. Current verification is recorded in [V3 evidence](../docs/BROWSER_WORKER_V3_EVIDENCE.md).
 
 **EXPERIMENTAL / UNVERIFIED LIVE LOOP — LIVE_SMOKE_NOT_YET_VERIFIED.** Local fake-MCP integration tests pass; the real endpoint initialized and listed tools, but browser tab discovery timed out. No live message or ACK receipt was confirmed.
@@ -28,7 +30,7 @@ That upstream setup is an alternative for new users, not a guarantee it attaches
 
 ## Example config and command
 
-Copy [example.config.json](example.config.json) to `runtime/worker.local.json` (ignored by Git). Replace its placeholder URL locally and narrow the composer selector to exactly one element. For general research replies, configure a genuine completion selector; absent that, V0 accepts only an exact, self-delimiting `ACK <RUN_ID>` reply observed twice with no generating signal.
+For explicitly selected standalone usage, copy [example.config.json](example.config.json) to `runtime/worker.local.json` (ignored by Git). Replace its placeholder URL locally and narrow the composer selector to exactly one element. V3 accepts matching run_id/enum state structured JSON, exact ACK, or a genuine configured completion signal, observed stably with no generation. The ACK example below is a retained diagnostic, not the next full-workflow acceptance target.
 
 The CLI supports `-Endpoint`, `-WorkerUrl`, `-Message`, `-Timeout` and aliases `--endpoint`, `--worker-url`, `--message`, `--timeout`.
 

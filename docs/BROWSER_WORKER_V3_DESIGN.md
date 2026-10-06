@@ -1,5 +1,9 @@
 # Browser Worker 3.0.0 engineering contract
 
+**Phase frozen; implementation remains f8dcb4bb3c348fd0f95d5af2a594fc3626635b0a.** Local tests passed; V3 provider-live full workflow remains NOT_RUN. This retained design is not a command to resume development. [START_HERE](phase-closeout-20261006/START_HERE.md) is the current entrypoint.
+
+Only explicit user restart authorizes the next short, bounded real journey: task → DOT/Muse → reply → primary artifact/bundle or structured inline → actual local read → Codex interpretation → same-thread targeted revision → final delivery. Measure human interventions, manual clicks, copy/paste, rescue events, actual artifact receipt/read and context continuity versus old manual Playwright coordination; duration is not acceptance. Both workers historically delivered ZIPs; inline is fallback for either, not a permanent Muse restriction. Historical ZIP formats differ from the V3 contract and are not proven compatible by local tests.
+
 Goal: compose real persistent DOT/Muse conversations with trustworthy result acquisition, without narrowing the historical loop to ACK. Protect frozen tags, private thread URLs and existing experiment records. Do not replay uncertain sends. Commits/push explicitly authorized by the user.
 
 Acceptance: existing transport/wrapper/B06 checks remain green; registered observations use durable same-thread baselines and bounded turns; complete structured replies and partial raw preservation work; DOT ZIP and Muse inline workflows reach local read with explicit integrity failures; cross-worker bundle/whole-row hash dedupe; stale or uncorrelated observations never establish success. Full live results are reported independently from local tests.
@@ -14,7 +18,9 @@ Artifacts are immutable byte copies keyed by SHA-256 beneath each run, with sepa
 
 Context capsule is a small coordinator-reviewed handoff, not another chat transcript. Scheduling, lane assignment, semantic dedupe and synthesis remain coordinator responsibilities.
 
-## Full-workflow live regression (designed after local implementation)
+## Historical V3 candidate regression (retained design, not current restart plan)
+
+The deterministic sequence below was designed during implementation and not run live. It remains a diagnostic asset; the current next target is the real user journey above, not automatic artificial challenges or ACK/one-hour plans.
 
 Run budget: DOT 3 turns, Muse 3 turns; collection windows <=120s each, one read-only reconciliation attempt on stale controls. Do not spend a turn on ACK. Each lane uses its existing configured thread and validated UI selectors. Never reset pending state to restart a failed run.
 

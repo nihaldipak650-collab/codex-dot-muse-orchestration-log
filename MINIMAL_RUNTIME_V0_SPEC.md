@@ -1,5 +1,7 @@
 # Minimal Runnable V0 — single worker
 
+**Historical design / diagnostic asset, not current restart instructions.** First read [START_HERE](docs/phase-closeout-20261006/START_HERE.md). V3 local implementation exists at f8dcb4b; its provider-live full workflow remains NOT_RUN. This phase is frozen. Retained ACK and V0 pre-implementation statements below do not authorize a run or replace the next explicitly restarted real user journey.
+
 Historical design baseline from before `GITHUB-RUNTIME-SPRINT-20261006`. Experimental code now exists in [runtime/README.md](runtime/README.md), with passing local tests and an unverified live loop. The specification below preserves the original proposed design and pre-implementation status.
 
 **Proposed implementation specification, not shipped software.** The public clone currently cannot execute this loop. The [gap audit](PROJECT_GAP_AUDIT.md) distinguishes historical operation from reusable code.

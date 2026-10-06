@@ -1,5 +1,7 @@
 # 下一Agent交接（只读归档→后续授权执行）
 
+**历史资产／当前执行入口已替代。** 以下保留 14:02 冻结时的交接原文，不是当前任务队列。当前远端仓库已存在，下午旧流程回归追回 B07 至 74 条；不能照下文再次创建仓库、补收 B07 或设置旧窗口。先读 [阶段 START_HERE](phase-closeout-20261006/START_HERE.md)。Browser Worker 3.0.0 技术基线 f8dcb4b，V3 provider-live full workflow NOT_RUN。本阶段冻结；仅在用户明确重启时验证一次短、有界的真实 full-workflow user journey，不自动执行 ACK、一小时或其它旧 TODO。
+
 1. 先读00/01/03/05/08与14_FREEZE_MANIFEST。核对10_FILE_HASHES.sha256，不把状态字样当结果。
 2. 本包截止2026-10-06T14:02:51.194154+08:00，regression源状态INVALIDATED_PREFLIGHT_NOT_CONFIRMED。REPORTED：原13:12:37起点已invalidated=True；actual_start_utc=None，actual_hard_stop_utc=None。原16:12:37不得当新回归截止。 原目录仍可能变化；不要把快照称为最新在线状态。REPORTED：运行Agent在14:01记录读到B07的11:53回复元数据，worker自报研究COMPLETE、保留A1/B2，但实际items交付0；本Archivist只核对保存元数据，未看在线页面。
 3. 本Archivist没有控制DOT/Muse或修改任何源项目。下一Agent未经另行授权不要向worker发消息、改prompt、创建batch、修Playwright或修改运行日志。
