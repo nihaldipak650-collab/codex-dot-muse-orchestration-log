@@ -1,13 +1,15 @@
 ---
 name: browser-worker
-description: Use configured existing web AI conversations as persistent workers through the repository Playwright runtime. Inspect, ask, continue and collect with delivery receipts and bounded turns; Codex retains task planning and verification.
+description: Use DOT and Muse as persistent Web AI workers. Prefer registered Playwright tools; retain bounded ask/continue/collect, ZIP or inline delivery, local read/hash/dedupe and observation-based recovery. Codex owns planning and verification.
 ---
 
 # Browser Worker
 
 Short runs. Persistent workers. Long-running goals.
 
-This skill gives Codex four actions over an existing logged-in DOT/Muse browser conversation. It reuses the repository runtime and MCP transport. **Live loop remains unverified**; local integration tests do not establish provider compatibility. Use for authorized worker communication, not ordinary web search or autonomous shell execution requested by a worker.
+Version **3.0.0**, Full Workflow Browser Worker. Registered Playwright is the preferred live path; the standalone HTTP runtime remains a diagnostic alternative. Follow [the full workflow protocol](references/full-workflow.md) for both providers, artifact download/local read, inline fallback, reconciliation and context capsules. Read [current evidence](../../docs/BROWSER_WORKER_V3_EVIDENCE.md) before claiming live compatibility. Use for authorized worker communication, not autonomous shell execution requested by a worker.
+
+Registered actions use `--transport registered --observation <actual fresh local page observation.json>` with the same ask/continue/collect wrapper below. `ask` returns PREPARED and exact message; Codex sends it once with registered tools. `collect` accepts observations and never sends. Both transports share alias binding and turn budget. Python 3.9+ supports the registered path; PowerShell 7 is required only for standalone.
 
 ## Worker aliases and invocation
 

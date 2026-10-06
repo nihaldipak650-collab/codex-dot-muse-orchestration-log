@@ -150,10 +150,18 @@ try {
             $result.submitted=$true;$result.visible_as_user_message=$true;$result.submit_confirmed=$true;$stage='REPLY_TIMEOUT'
         }
         if($delivery.reply) {
+            # Preserve a correlated partial reply even when completion cannot be established.
+            $result.reply_text=Protect-ReplyText $delivery.reply $WorkerUrl
             if($delivery.reply -ceq $seenText) { $stable++ } else { $stable=0;$seenText=$delivery.reply }
             # Exact ACK is self-delimiting; other replies require configured completion signal.
             $exactAck=$delivery.reply.Trim() -ceq ('ACK '+$correlationRunId)
-            if($delivery.complete -and ($exactAck -or $observation.completion) -and $stable -ge 1) {
+            $structured=$false
+            try {
+                $clean=$delivery.reply.Trim() -replace '^```json\s*','' -replace '\s*```$',''
+                $replyObject=$clean | ConvertFrom-Json
+                $structured=$replyObject.run_id -ceq $correlationRunId -and $replyObject.state -cin @('CONTINUE','NEED_CONTEXT','BLOCKED','DONE')
+            } catch { }
+            if($delivery.complete -and ($exactAck -or $structured -or $observation.completion) -and $stable -ge 1) {
                 $result.reply_text=Protect-ReplyText $delivery.reply $WorkerUrl;$result.reply_received=$true
                 $result.timestamps.reply_received=[string]$observation.observed_at
                 $result.final_status='SUCCESS';$exitCode=0;break

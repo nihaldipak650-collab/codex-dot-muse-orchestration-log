@@ -4,6 +4,8 @@ from datetime import datetime, timezone
 from pathlib import Path
 
 ROOT=Path(__file__).resolve().parents[3]
+sys.path.insert(0,str(ROOT/'runtime'))
+from workflow import Workflow
 def now():return datetime.now(timezone.utc).isoformat()
 def sha(text):return hashlib.sha256(text.encode()).hexdigest()
 def save(path,data):
@@ -25,6 +27,18 @@ def invoke(args):
     try:
         state=json.loads(path.read_text()) if path.exists() else {'worker_alias':args.worker,'safe_worker_id':binding,'thread_binding':binding,'last_run_id':None,'last_confirmed_user_message_hash':None,'last_correlated_reply_hash':None,'pending':False,'last_status':'NEW','updated_at':now(),'turn_count':0,'next_state':'UNSTRUCTURED'}
         if state['thread_binding']!=binding:raise ValueError('THREAD_BINDING_MISMATCH')
+        if args.transport=='registered':
+            if not args.observation:raise ValueError('OBSERVATION_REQUIRED')
+            flow=Workflow(args.state_dir,args.worker,worker)
+            observed=json.loads(args.observation.read_text(encoding='utf-8-sig'))
+            if args.action=='inspect':
+                flow.observation(observed)
+                return {'action':'inspect','status':'INSPECT_READY','session':flow.state}
+            if args.action=='collect':return flow.reconcile(observed)
+            if not args.message:raise ValueError('MESSAGE_REQUIRED')
+            return flow.prepare(args.message,observed,args.action=='continue',args.max_turns)
+        if state.get('transport')=='registered' and state['pending']:
+            raise ValueError('REGISTERED_PENDING_USE_REGISTERED_COLLECT')
         if args.action in ('ask','continue'):
             if state['pending']:raise ValueError('PENDING_OR_DELIVERY_UNKNOWN_NO_RESEND')
             if state['turn_count']>=args.max_turns:raise ValueError('MAX_TURNS')
@@ -76,11 +90,13 @@ def main():
     p.add_argument('--workers',type=Path,default=ROOT/'workers.local.json')
     p.add_argument('--state-dir',type=Path,default=ROOT/'sessions.local')
     p.add_argument('--message');p.add_argument('--timeout',type=int,default=10);p.add_argument('--max-turns',type=int,default=6)
+    p.add_argument('--transport',choices=['standalone','registered'],default='standalone')
+    p.add_argument('--observation',type=Path)
     p.add_argument('--allow-example',action='store_true',help='permit synthetic example host for local tests only')
     args=p.parse_args()
     if not 1<=args.max_turns<=20 or not 1<=args.timeout<=300:p.error('bounds: max-turns 1..20; timeout 1..300')
     try:
-        result=invoke(args);print(json.dumps(result,ensure_ascii=False));return 0 if result['status'] in ('SUCCESS','INSPECT_READY','NOT_PENDING') else 1
+        result=invoke(args);print(json.dumps(result,ensure_ascii=False));return 0 if result['status'] in ('SUCCESS','INSPECT_READY','NOT_PENDING','PREPARED') else 1
     except (ValueError,KeyError,OSError,json.JSONDecodeError) as error:
         # Error code only, never raw exception text containing worker paths/URLs.
         code=str(error) if isinstance(error,ValueError) and re.fullmatch('[A-Z_]+',str(error)) else 'LOCAL_STATE_OR_CONFIG_ERROR'
