@@ -58,6 +58,8 @@ class FakeMCP(BaseHTTPRequestHandler):
                 if state['sent']:users.append(state['message'])
                 if state['sent'] and scenario not in ('no_reply','old_reply','draft'):
                     reply=('Completed '+run+'\n'+URL+'\nAuthorization: Bearer synthetic-secret') if scenario=='redaction' else 'ACK '+run
+                    if scenario=='structured':reply=json.dumps({'run_id':run,'state':'DONE','results':[{'id':1}]})
+                    if scenario=='partial':reply='{"run_id":"'+run+'","results":[{"id":1},'
                     assistants.append(reply)
                 ob={'users':users,'assistants':assistants,'generating':False,'completion':scenario=='redaction','observed_at':datetime.now(timezone.utc).isoformat()}
                 text='### Result\n'+json.dumps(ob)+'\n### Ran Playwright code\n(synthetic)'
@@ -105,7 +107,11 @@ class RuntimeTests(unittest.TestCase):
                     if scenario=='redaction':
                         self.assertIn('[REDACTED_WORKER_URL]',data['reply_text'])
                         self.assertNotIn('synthetic-secret',data['reply_text'])
+                    elif scenario=='structured':self.assertEqual('DONE',json.loads(data['reply_text'])['state'])
                     else:self.assertEqual('ACK '+run,data['reply_text'])
+                if scenario=='partial':
+                    self.assertIn('{"id":1}',data['reply_text'])
+                    self.assertFalse(data['reply_received'])
                 if scenario in ('tab_opened','ref_opened'):self.assertEqual('TAB_OPENED',data['tab_status'])
                 sends=server.state['sends']
                 self.assertLessEqual(sends,1)
@@ -128,6 +134,8 @@ class RuntimeTests(unittest.TestCase):
     def test_standard_open_tab(self):self.run_case('ref_opened','SUCCESS')
     def test_private_url_reply_redaction(self):self.run_case('redaction','SUCCESS')
     def test_progress_notification_is_not_fill_receipt(self):self.run_case('progress_on_fill','DELIVERY_UNKNOWN')
+    def test_structured_reply_completion(self):self.run_case('structured','SUCCESS')
+    def test_partial_reply_preserved_without_success(self):self.run_case('partial','REPLY_TIMEOUT')
 
 if __name__=='__main__':
     if not PS:raise SystemExit('Install PowerShell or set RUNTIME_POWERSHELL')

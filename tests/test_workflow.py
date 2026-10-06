@@ -184,6 +184,37 @@ class WorkflowTests(unittest.TestCase):
         source.write_text(raw)
         self.assertEqual('VALIDATED',self.flow.ingest(source,run,inline=True)['state'])
 
+    def test_multiline_inline_raw_bytes_preserved_on_windows(self):
+        prepared=self.flow.prepare('go',self.obs())
+        raw=json.dumps({'run_id':prepared['run_id'],'state':'DONE','results':[{'id':1}]},indent=2)
+        for _ in range(2):self.flow.reconcile(self.obs(users=[prepared['message']],replies=[raw]))
+        saved=self.root/'artifacts'/prepared['run_id']/'reply.raw.txt'
+        self.assertEqual(raw.encode('utf-8'),saved.read_bytes())
+        source=self.root/'exact-reply.json'
+        source.write_bytes(saved.read_bytes())
+        self.assertEqual('VALIDATED',self.flow.ingest(source,prepared['run_id'],inline=True)['state'])
+
+    def test_corrupt_compressed_zip_preserves_failure_receipt(self):
+        prepared,_=self.deliver()
+        source=self.root/'corrupt.zip'
+        with zipfile.ZipFile(source,'w',compression=zipfile.ZIP_DEFLATED) as z:
+            z.writestr('results.json','{"results":[{"id":1}]}')
+            info=z.getinfo('results.json')
+            offset=info.header_offset+30+len(info.filename.encode())+len(info.extra)
+        raw=bytearray(source.read_bytes());raw[offset]=0xff;source.write_bytes(raw)
+        record=self.flow.ingest(source,prepared['run_id'])
+        self.assertEqual('DOWNLOADED',record['state'])
+        self.assertIn({'code':'ZIP_REJECTED'},record['errors'])
+        saved=self.root/'artifacts'/prepared['run_id']/record['sha256']/'receipt.json'
+        self.assertTrue(saved.exists())
+
+    def test_cross_worker_registered_artifact_receipt_rejected(self):
+        prepared,raw=self.deliver()
+        muse=w.Workflow(self.root,'muse',{'url':'https://worker.example/thread/m'})
+        source=self.root/'dot-inline.json';source.write_bytes(raw.encode())
+        with self.assertRaisesRegex(ValueError,'RECEIPT_THREAD_MISMATCH'):
+            muse.ingest(source,prepared['run_id'],inline=True)
+
 
 if __name__ == "__main__":
     unittest.main()

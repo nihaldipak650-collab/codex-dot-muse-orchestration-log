@@ -46,7 +46,7 @@ python runtime/workflow.py ingest --worker dot --run-id <id> --source <actual lo
 
 ZIP contract: root manifest.json with run_id and files mapping every non-manifest archive-relative path to SHA-256; results.json or results.csv; summary.md. Ingest preserves original bytes, safely unpacks within private state, reads/parses, verifies binding/hashes, saves rows and receipt, and updates the shared bundle/row dedupe index only for validated results. Reject traversal/symlink/duplicate-name/size violations. Partial recovery preserves complete rows without accepting them into the validated index.
 
-For Muse fallback, save the exact correlated JSON reply locally and ingest with --inline. Matching run_id and nonempty real rows are required. No downloadable file is claimed. For malformed replies use reply.raw.txt and reply.parsed.json for correction. VALIDATED is package integrity, not proof of factual correctness.
+For Muse fallback, copy the preserved reply.raw.txt **bytes** to a local .json and ingest with --inline. Do not reserialize JSON or translate LF/CRLF; exact correlated reply hash, matching run_id and nonempty real rows are required. No downloadable file is claimed. For malformed replies use reply.raw.txt and reply.parsed.json for correction. VALIDATED is package integrity, not proof of factual correctness.
 
 Artifact stages are separate: worker declarations are DECLARED; observed correlated targets VISIBLE; copied local bytes DOWNLOADED; read/parsed files READ; nonempty results plus run binding/file integrity VALIDATED. Communication SUCCESS does not imply any artifact stage. Unsupported or malformed bytes remain preserved. Exact bundle hash and canonical whole-row JSON equality dedupe across workers; semantic/entity dedupe belongs to Codex.
 

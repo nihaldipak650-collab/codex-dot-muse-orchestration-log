@@ -14,6 +14,8 @@ import re
 import sys
 import uuid
 import zipfile
+import zlib
+import lzma
 from datetime import datetime, timezone
 from pathlib import Path, PurePosixPath
 
@@ -122,7 +124,10 @@ class Workflow:
             raise ValueError("INVALID_RUN_ID")
         path=self.base / "turns" / (run + ".json")
         if path.exists():
-            return load(path)
+            receipt=load(path)
+            if receipt.get('thread_binding') != self.binding or receipt.get('run_id') != run:
+                raise ValueError("RECEIPT_THREAD_MISMATCH")
+            return receipt
         resolved=self.state.get('receipt_runs',{}).get(run,run)
         if not re.fullmatch(r"BW-[a-f0-9]{32}", resolved):
             raise ValueError("INVALID_RECEIPT_POINTER")
@@ -181,7 +186,7 @@ class Workflow:
             raw = replies[0]
             folder = self.base / "artifacts" / turn["run_id"]
             folder.mkdir(parents=True, exist_ok=True)
-            (folder / "reply.raw.txt").write_text(raw, encoding="utf-8")
+            (folder / "reply.raw.txt").write_bytes(raw.encode("utf-8"))
             parsed = parse_result(raw)
             write(folder / "reply.parsed.json", parsed)
             data = parsed["data"]
@@ -248,7 +253,7 @@ class Workflow:
                         dest.parent.mkdir(parents=True, exist_ok=True)
                         dest.write_bytes(archive.read(item))
                         files.append((dest, dest.suffix.lower()))
-            except (ValueError, zipfile.BadZipFile, RuntimeError, OSError):
+            except (ValueError, zipfile.BadZipFile, RuntimeError, OSError, zlib.error, lzma.LZMAError, EOFError, NotImplementedError):
                 record["errors"].append({"code": "ZIP_REJECTED"})
                 files = []
         manifest = None
